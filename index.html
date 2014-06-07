@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Mega Quiz</title>
+    <style>
+      #playerslistdiv {border: solid 1px red}
+      #rankingdiv {border: solid 1px blue}
+    </style>
+  </head>
+  <body>
+    Enter your name:
+    <form onSubmit="return submitName();">
+      <input type="text" id="namefield">
+      <input type="submit" value="Set nickname">
+    </form>
+    <br/>
+    <br/>
+    <div id="hiddenbutton" style="display:none;">
+      ADMIN PANEL<br/>
+      <input type="button" id="a1" value="Set Q1" onClick="setQ('setq1', 'a1');"><br/>
+      <input type="button" id="a2" value="Set Q2" onClick="setQ('setq2', 'a2');"><br/>
+      <input type="button" id="a3" value="Set Q3" onClick="setQ('setq3', 'a3');"><br/>
+    </div>
+    <span id="timer"></span><br/>
+    Question: <h2 id="header"></h2>
+    <p>
+      <input type="button" id="A" class="answer" onClick="submitAnswer('A');">
+      <input type="button" id="B" class="answer" onClick="submitAnswer('B');">
+      <input type="button" id="C" class="answer" onClick="submitAnswer('C');">
+      <input type="button" id="D" class="answer" onClick="submitAnswer('D');">
+    </p>
+
+    Submission: <input type="text" id="statusboard" readonly><br/>
+    Result: <input type="text" id="resultboard" readonly><br/>
+    Score: <input type="text" id="scoreboard" readonly><br/><br/></br><br/>
+    <p id="correctanswerp"></p>
+    <div id="playerslistdiv">
+      List of Players <p id="playersp"></p>
+    </div>
+    <div id="rankingdiv">
+      Ranking <p id="rankingp"></p>
+    </div>
+
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+    var statusboard = document.getElementById('statusboard');
+    var resultboard = document.getElementById('resultboard');
+    var playerslist = document.getElementById('playersp');
+    var rankinglist = document.getElementById('rankingdiv');
+    var rankingp = document.getElementById('rankingp');
+    var buttons = document.getElementsByClassName("answer");
+
+    //Emit a submitted answer on the buttons
+    function submitAnswer(answer) {
+      socket.emit('submission', document.getElementById(answer).value);
+      document.getElementById(answer).style.color = "blue";
+      for (var i = 0; i < 4; i++) {
+        buttons[i].disabled=true;
+        if (buttons[i].style.color != "blue") {
+          buttons[i].style.color = "gray";
+        }
+      }
+    };
+
+    //Emit a new name for the Name submit button 
+    function submitName(nameboard) {
+      if (document.getElementById('namefield').value == 'admin') {
+        document.getElementById('hiddenbutton').style.display = "block";
+      }
+      socket.emit('newname', document.getElementById('namefield').value);
+      return false; //Be careful with this | Used so the submit button doesn't refresh
+    };
+
+    //When the server emits return information from an answer...
+    socket.on('return', function(submission, result, score) {
+      statusboard.value = submission;
+      resultboard.value = result;
+      scoreboard.value = score;
+    });
+
+    //When the server emits 'returnscores', show the name and score
+    socket.on('returnscores', function(scoreList, rightAnswer) {
+      rankingp.innerHTML = scoreList;
+      document.getElementById('correctanswerp').innerHTML = "Correct Answer: " + rightAnswer;
+      for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].value === rightAnswer) {
+          buttons[i].style.background = "#2eff69";
+        }
+      }
+    });
+
+    socket.on('returnplayers', function(nameboard){
+      var incomingplayer = document.createTextNode(nameboard);
+      playerslist.appendChild(incomingplayer);
+      var br = document.createElement("br");
+      playerslist.appendChild(br);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      socket.on('change_header', function(data) {
+          document.getElementById('header').innerHTML = data.header;
+          document.getElementById('A').value = data.answerA;
+          document.getElementById('B').value = data.answerB;
+          document.getElementById('C').value = data.answerC;
+          document.getElementById('D').value = data.answerD;
+
+      });
+    });
+
+
+    //
+    function setQ(q, id) {
+      socket.emit(q);
+      document.getElementById(id).disabled=true;
+    }
+
+    socket.on('disablebuttons', function() {
+      for (var i = 0; i < 4; i++) {
+        buttons[i].disabled=true;
+        if (buttons[i].style.color != "blue") {
+          buttons[i].style.color = "gray";
+        }
+      }
+    });
+
+    socket.on('settimer', function() {
+      document.getElementById('correctanswerp').innerHTML = "";
+      for (var i = 0; i < 4; i++) {
+        buttons[i].style.color = "black";
+        buttons[i].style.background = "#FCFCFC";
+        buttons[i].disabled=false;
+      }
+
+      var count = 10;
+      var counter = setInterval(timer, 1000);
+      function timer() {
+        count = count - 1;
+        if (count == -1) {
+          clearInterval(counter);
+          return;
+        }
+        document.getElementById('timer').innerHTML = count + " seconds left";
+      }
+    });
+
+
+  </script>
+</html>
+

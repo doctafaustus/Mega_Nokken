@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+  </head>
+  <body>
+        <p>
+      <input type="button" value="Mars" id="A" class="answer" onClick="changeButtons();">
+      <input type="button" value="Venus" id="B" class="answer" onClick="submitAnswer('B');">
+      <input type="button" value="Mercury" id="C" class="answer" onClick="submitAnswer('C');">
+      <input type="button" value="Earth" id="D" class="answer" onClick="submitAnswer('D');">
+    </p>
+<span id="timer"></span>
+
+  <button onclick="document.getElementById('myTune').play()">Play Music</button>
+  <audio id="myTune">
+    <source src="sound.mp3">
+  </audio>
+
+  </body>
+  <script>
+    function changeButtons() {
+      var x = document.getElementById('A');
+      x.value = "Bakc";
+    }
+
+    var count = 7;
+    var counter = setInterval(timer, 1000);
+
+    function timer() {
+      count = count - 1;
+      if (count == -1) {
+        clearInterval(counter);
+        return;
+      }
+
+      document.getElementById('timer').innerHTML = count + " seconds left";
+    }
+
+
+  </script>
+</html>
+
