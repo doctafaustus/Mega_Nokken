@@ -117,12 +117,14 @@
     }
 
     socket.on('disablebuttons', function() {
-      for (var i = 0; i < 4; i++) {
-        buttons[i].disabled=true;
-        if (buttons[i].style.color != "blue") {
-          buttons[i].style.color = "gray";
+      setTimeout(function() {
+        for (var i = 0; i < 4; i++) {
+          buttons[i].disabled=true;
+          if (buttons[i].style.color != "blue") {
+            buttons[i].style.color = "gray";
+          }
         }
-      }
+      }, 10000);
     });
 
     socket.on('settimer', function() {

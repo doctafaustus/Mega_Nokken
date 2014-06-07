@@ -67,19 +67,16 @@ io.on('connection', function(socket) {
 			answerD: q1[4]
 		});
 		io.emit('settimer');
+		io.emit('disablebuttons');
 		setTimeout(function() {
-			io.emit('disablebuttons');
-			setTimeout(function() {
-				var scoreList = ""; //Make the list of players and their scores
-				for (var i = 0; i < clients.length; i++) {
-					scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-				}
-				console.log(scoreList);
-				var rightAnswer = q1[3];
-				io.emit('returnscores', scoreList, rightAnswer);
-			}, 2500);
-
-		}, 10000);
+		var scoreList = ""; //Make the list of players and their scores
+		for (var i = 0; i < clients.length; i++) {
+			scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+		}
+		console.log(scoreList);
+		var rightAnswer = q1[3];
+		io.emit('returnscores', scoreList, rightAnswer);
+		}, 12500);
 	});
 
 	socket.on('setq2', function() {
@@ -93,19 +90,16 @@ io.on('connection', function(socket) {
 			answerD: q2[4]
 		});
 		io.emit('settimer');
+		io.emit('disablebuttons');
 		setTimeout(function() {
-			io.emit('disablebuttons');
-			setTimeout(function() {
-				var scoreList = ""; //Make the list of players and their scores
-				for (var i = 0; i < clients.length; i++) {
-					scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-				}
-				console.log(scoreList);
-				var rightAnswer = q1[3];
-				io.emit('returnscores', scoreList, rightAnswer);
-			}, 2500);
-
-		}, 10000);
+			var scoreList = ""; //Make the list of players and their scores
+			for (var i = 0; i < clients.length; i++) {
+				scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+			}
+			console.log(scoreList);
+			var rightAnswer = q2[1];
+			io.emit('returnscores', scoreList, rightAnswer);
+		}, 12500);
 	});
 
 	socket.on('setq3', function() {
@@ -119,19 +113,16 @@ io.on('connection', function(socket) {
 		    answerD: q3[4]
 		});
 		io.emit('settimer');
+		io.emit('disablebuttons');
 		setTimeout(function() {
-			io.emit('disablebuttons');
-			setTimeout(function() {
-				var scoreList = ""; //Make the list of players and their scores
-				for (var i = 0; i < clients.length; i++) {
-					scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-				}
-				console.log(scoreList);
-				var rightAnswer = q1[3];
-				io.emit('returnscores', scoreList, rightAnswer);
-			}, 2500);
-
-		}, 10000);
+		var scoreList = ""; //Make the list of players and their scores
+		for (var i = 0; i < clients.length; i++) {
+			scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+		}
+		console.log(scoreList);
+		var rightAnswer = q3[4];
+		io.emit('returnscores', scoreList, rightAnswer);
+		}, 12500);
 	});
 
 
