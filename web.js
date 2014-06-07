@@ -47,21 +47,11 @@ io.on('connection', function(socket) {
 				var result = "CORRECT";
 				var score = socket.id.rating;
 				socket.emit('return', submission, result, score);
-
-
 			} else {
 				console.log("FALSE");
 				var result = "FALSE";
 				var score = socket.id.rating;
 				socket.emit('return', submission, result, score);
-				/*
-				var scoreList = ""; //Make the list of players and their scores
-				for (var i = 0; i < clients.length; i++) {
-					scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-				}
-				console.log(scoreList);
-				io.emit('returnscores', scoreList);
-				*/
 			}
 		}
 	});
@@ -79,13 +69,16 @@ io.on('connection', function(socket) {
 		io.emit('settimer');
 		setTimeout(function() {
 			io.emit('disablebuttons');
-			var scoreList = ""; //Make the list of players and their scores
-			for (var i = 0; i < clients.length; i++) {
-				scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-			}
-			console.log(scoreList);
-			var rightAnswer = q1[3];
-			io.emit('returnscores', scoreList, rightAnswer);
+			setTimeout(function() {
+				var scoreList = ""; //Make the list of players and their scores
+				for (var i = 0; i < clients.length; i++) {
+					scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+				}
+				console.log(scoreList);
+				var rightAnswer = q1[3];
+				io.emit('returnscores', scoreList, rightAnswer);
+			}, 2500);
+
 		}, 10000);
 	});
 
@@ -102,13 +95,16 @@ io.on('connection', function(socket) {
 		io.emit('settimer');
 		setTimeout(function() {
 			io.emit('disablebuttons');
-			var scoreList = ""; //Make the list of players and their scores
-			for (var i = 0; i < clients.length; i++) {
-				scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-			}
-			console.log(scoreList);
-			var rightAnswer = q2[1];
-			io.emit('returnscores', scoreList, rightAnswer);
+			setTimeout(function() {
+				var scoreList = ""; //Make the list of players and their scores
+				for (var i = 0; i < clients.length; i++) {
+					scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+				}
+				console.log(scoreList);
+				var rightAnswer = q1[3];
+				io.emit('returnscores', scoreList, rightAnswer);
+			}, 2500);
+
 		}, 10000);
 	});
 
@@ -125,12 +121,16 @@ io.on('connection', function(socket) {
 		io.emit('settimer');
 		setTimeout(function() {
 			io.emit('disablebuttons');
-			var scoreList = ""; //Make the list of players and their scores
-			for (var i = 0; i < clients.length; i++) {
-				scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-			}
-			console.log(scoreList);
-			io.emit('returnscores', scoreList);
+			setTimeout(function() {
+				var scoreList = ""; //Make the list of players and their scores
+				for (var i = 0; i < clients.length; i++) {
+					scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+				}
+				console.log(scoreList);
+				var rightAnswer = q1[3];
+				io.emit('returnscores', scoreList, rightAnswer);
+			}, 2500);
+
 		}, 10000);
 	});
 
