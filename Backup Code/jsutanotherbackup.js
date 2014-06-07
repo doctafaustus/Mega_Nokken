@@ -95,9 +95,14 @@ io.on('connection', function(socket) {
 			answerC: q2[3],
 			answerD: q2[4]
 		});
-		var rightAnswer = q1[3];
 		io.emit('settimer');
-		io.emit('disablebuttons', rightAnswer);
+		var scoreList = ""; //Make the list of players and their scores
+		for (var i = 0; i < clients.length; i++) {
+			scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+		}
+		console.log(scoreList);
+		var rightAnswer = q1[3];
+		io.emit('disablebuttons', scoreList, rightAnswer);
 	});
 
 	socket.on('setq3', function() {
@@ -110,9 +115,14 @@ io.on('connection', function(socket) {
 		    answerC: q3[3],
 		    answerD: q3[4]
 		});
-		var rightAnswer = q3[4];
 		io.emit('settimer');
-		io.emit('disablebuttons', rightAnswer);
+		var scoreList = ""; //Make the list of players and their scores
+		for (var i = 0; i < clients.length; i++) {
+			scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
+		}
+		console.log(scoreList);
+		var rightAnswer = q1[3];
+		io.emit('disablebuttons', scoreList, rightAnswer);
 	});
 
 

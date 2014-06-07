@@ -80,16 +80,6 @@
       scoreboard.value = score;
     });
 
-    //When the server emits 'returnscores', show the name and score
-    socket.on('returnscores', function(scoreList, rightAnswer) {
-      rankingp.innerHTML = scoreList;
-      document.getElementById('correctanswerp').innerHTML = "Correct Answer: " + rightAnswer;
-      for (var i = 0; i < buttons.length; i++) {
-        if (buttons[i].value === rightAnswer) {
-          buttons[i].style.background = "#2eff69";
-        }
-      }
-    });
 
     socket.on('returnplayers', function(nameboard){
       var incomingplayer = document.createTextNode(nameboard);
@@ -116,7 +106,7 @@
       document.getElementById(id).disabled=true;
     }
 
-    socket.on('disablebuttons', function() {
+    socket.on('disablebuttons', function(rightAnswer) {
       setTimeout(function() {
         for (var i = 0; i < 4; i++) {
           buttons[i].disabled=true;
@@ -124,7 +114,21 @@
             buttons[i].style.color = "gray";
           }
         }
-      }, 10000);
+        // Return scores now
+        setTimeout(function() {
+          socket.emit('requestscores', rightAnswer);
+          for (var i = 0; i < buttons.length; i++) {
+            if (buttons[i].value === rightAnswer) {
+              buttons[i].style.background = "#2eff69";
+            }
+          }
+        }, 2000);
+      }, 8000);
+    });
+
+    socket.on('returnscores', function(scoreList, rightAnswer) {
+      document.getElementById('correctanswerp').innerHTML = "Correct Answer: " + rightAnswer;
+      rankingp.innerHTML = scoreList;
     });
 
     socket.on('settimer', function() {
@@ -134,8 +138,7 @@
         buttons[i].style.background = "#FCFCFC";
         buttons[i].disabled=false;
       }
-
-      var count = 10;
+      var count = 8;
       var counter = setInterval(timer, 1000);
       function timer() {
         count = count - 1;
@@ -146,8 +149,6 @@
         document.getElementById('timer').innerHTML = count + " seconds left";
       }
     });
-
-
   </script>
 </html>
 
