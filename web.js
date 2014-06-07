@@ -391,10 +391,6 @@ var q15 = ['What is the hardest substance in the body?', 'Calcium', 'Enamel', 'C
 
 
 
-//If name === Schmelfbury then show a div with a button to reset the clock
-
-
-
 
 
 
