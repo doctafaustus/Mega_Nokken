@@ -42,6 +42,10 @@
       <input type="button" id="D" class="answer" onClick="submitAnswer('D');">
     </p>
 
+    Submission: <input type="text" id="statusboard" readonly><br/>
+    Result: <input type="text" id="resultboard" readonly><br/>
+    Score: <input type="text" id="scoreboard" readonly><br/><br/></br><br/>
+  
     <p id="correctanswerp"></p>
     <div id="playerslistdiv">
       <strong>List of Players</strong><p id="playersp"></p>
@@ -54,6 +58,8 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
+    var statusboard = document.getElementById('statusboard');
+    var resultboard = document.getElementById('resultboard');
     var playerslist = document.getElementById('playersp');
     var rankinglist = document.getElementById('rankingdiv');
     var rankingp = document.getElementById('rankingp');
@@ -79,6 +85,14 @@
       socket.emit('newname', document.getElementById('namefield').value);
       return false; //Be careful with this | Used so the submit button doesn't refresh
     };
+
+    //When the server emits return information from an answer...
+    socket.on('return', function(submission, result, score) {
+      statusboard.value = submission;
+      resultboard.value = result;
+      scoreboard.value = score;
+    });
+
 
     socket.on('returnplayers', function(nameboard){
       var incomingplayer = document.createTextNode(nameboard);

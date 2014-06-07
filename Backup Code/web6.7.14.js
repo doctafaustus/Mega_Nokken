@@ -85,10 +85,12 @@ io.on('connection', function(socket) {
 				console.log("RATING FOR " + socket.id.name + " is:   " + socket.id.rating)
 				var result = "CORRECT";
 				var score = socket.id.rating;
+				socket.emit('return', submission, result, score);
 			} else {
 				console.log("FALSE");
 				var result = "FALSE";
 				var score = socket.id.rating;
+				socket.emit('return', submission, result, score);
 			}
 			//Create and re-create score list
 
