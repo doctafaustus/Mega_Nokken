@@ -1,11 +1,12 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res) {
 	res.sendfile('index.html');
 });
-
+app.use(express.static(__dirname + '/public'));
 
 //var time = new Date();
 //var timeInMillis = time.getTime();
@@ -14,7 +15,7 @@ app.get('/', function(req, res) {
 
 var clients = [];
 var list = "";
-
+                         
 io.on('connection', function(socket) {
 	clients.push(socket.id = new MakeObj(socket.id));
 	console.log(socket.id.name + ' connected');

@@ -1,0 +1,83 @@
+
+<html>
+<head>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+////////////////////////////////////////
+// F. Permadi 2002
+////////////////////////////////////////
+var text2 = "This is cool";
+var text=" This is a test for the typing effect.  \
+    To use this code, call startTyping(textParam, delayParam, destination), \
+    where 'textParam' is the string you would like to use, and \
+    'delay' is the delay in milliseconds; and 'destination' is the element \
+    where the text should be put into.<BR>You can even include\
+    html tags.  For example, I'm making this text \
+    &lt;I&gt<I>italic</I>&lt;/I&gt and \
+    I am adding a ruler here<HR>If you put the element inside a \
+    table cell, you have a lot of flexibility on how the text will\
+    appear by aligning the cell to top, middle or bottom.";
+        
+var delay=50;
+var currentChar=1;
+var destination="[none]";
+function type()
+{
+  //if (document.all)
+  {
+    var dest=document.getElementById(destination);
+    if (dest)// && dest.innerHTML)
+    {
+      dest.innerHTML=text.substr(0, currentChar)+"";
+      currentChar++;
+      if (currentChar>text.length)
+      {
+        currentChar=1;
+        "type()";
+      } 
+      else
+      {
+        setTimeout("type()", delay);
+      }
+    }
+  }
+}
+
+function startTyping(textParam, delayParam, destinationParam)
+{
+  text=textParam;
+  delay=delayParam;
+  currentChar=1;
+  destination=destinationParam;
+  type();
+}
+//-->  
+</SCRIPT>
+
+<STYLE TYPE="text/css">
+<!--
+.news
+{
+  font-family: "BankGothic Md BT, Helvetica";
+  
+  color=red;
+  color=#CCFF66;
+  
+}
+-->
+</STYLE>
+<title>JavaScript Typing Effect</title>
+</head>
+
+<body bgcolor="#336600" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" COLOR="#FFFFFF">
+   <font size="6" face="BankGothic Md BT" color="#99CC00">NEWS FLASH</font>
+   <font color="#CCFF66"><DIV ID="textDestination" class="news">...</DIV></FONT>
+</body>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+javascript:startTyping(text2, 50, "textDestination");
+
+//-->
+</SCRIPT>
+
+</html>

@@ -13,6 +13,7 @@
       <input type="text" id="namefield">
       <input type="submit" value="Set nickname">
     </form>
+    <img src="unnamed.jpg">
     <br/>
     <br/>
     <div id="hiddenbutton" style="display:none;">
@@ -33,6 +34,10 @@
       <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
       <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
     </div>
+    <button onclick="document.getElementById('myTune').play()">Play Music</button>
+    <audio id="myTune">
+      <source src="E.wav">
+    </audio>
     <span id="timer"></span><br/>
     Question: <h2 id="header"></h2>
     <p>
@@ -49,8 +54,8 @@
     <div id="rankingdiv">
       <strong>Ranking</strong><p id="rankingp"></p>
     </div>
+    <DIV ID="textDestination" class="news">...</DIV>
 
-  </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
@@ -73,7 +78,7 @@
 
     //Emit a new name for the Name submit button 
     function submitName(nameboard) {
-      if (document.getElementById('namefield').value == 'admin') {
+      if (document.getElementById('namefield').value == 'a') {
         document.getElementById('hiddenbutton').style.display = "block";
       }
       socket.emit('newname', document.getElementById('namefield').value);
@@ -89,12 +94,12 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       socket.on('change_header', function(data) {
-          document.getElementById('header').innerHTML = data.header;
+          //document.getElementById('header').innerHTML = data.header;
           document.getElementById('A').value = data.answerA;
           document.getElementById('B').value = data.answerB;
           document.getElementById('C').value = data.answerC;
           document.getElementById('D').value = data.answerD;
-
+          startTyping(data.header, 20, 'header');
       });
     });
 
@@ -148,6 +153,47 @@
         document.getElementById('timer').innerHTML = count + " seconds left";
       }
     });
-  </script>
+</script>
+
+<script>//Typing script
+  var text2 = "This is cool";
+
+  var delay=50;
+  var currentChar=1;
+  var destination="[none]";
+  function type()
+  {
+    //if (document.all)
+    {
+      var dest=document.getElementById(destination);
+      if (dest)// && dest.innerHTML)
+      {
+        dest.innerHTML=text.substr(0, currentChar)+"";
+        currentChar++;
+        if (currentChar>text.length)
+        {
+          currentChar=1;
+          "type()";
+        } 
+        else
+        {
+          setTimeout("type()", delay);
+        }
+      }
+    }
+  }
+
+  function startTyping(textParam, delayParam, destinationParam)
+  {
+    text=textParam;
+    delay=delayParam;
+    currentChar=1;
+    destination=destinationParam;
+    type();
+  }
+
+
+</script>
+</body>
 </html>
 
