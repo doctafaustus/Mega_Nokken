@@ -17,6 +17,21 @@ app.use(express.static(__dirname + '/public'));
 var clients = [];
 var list = "";
 var scoreList;
+
+
+io.on('connection', function(socket) {
+  var id = setInterval(function() {
+    socket.send(JSON.stringify(new Date()), function() {  });
+  }, 1000);
+
+  console.log('websocket connection open');
+
+  socket.on('close', function() {
+    console.log('websocket connection close');
+    clearInterval(id);
+  });
+});
+
                     
 io.on('connection', function(socket) {
 	clients.push(socket.id = new MakeObj(socket.id));
