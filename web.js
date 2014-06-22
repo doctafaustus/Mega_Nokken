@@ -15,17 +15,24 @@ app.use(express.static(__dirname + '/public'));
 
 var clients = [];
 var list = "";
-                         
+var scoreList;
+                    
 io.on('connection', function(socket) {
 	clients.push(socket.id = new MakeObj(socket.id));
 	console.log(socket.id.name + ' connected');
 	listClients(clients);
 
-
 	socket.on('newname', function(nameboard) {
 		socket.id.name = nameboard;
+		if (socket.id.name === "a") {
+			var adminPosition = clients.indexOf(socket.id);
+			if (adminPosition > -1) {
+				clients.splice(adminPosition, 1);
+				listClients(clients);
+				console.log("wacky weasel"); //Just to see if it works
+			}
+		}
 		console.log("New name is " + socket.id.name);
-		io.emit('returnplayers', nameboard);
 	});
 
 	socket.on('submission', function(submission) {
@@ -82,27 +89,42 @@ io.on('connection', function(socket) {
 		function getResults(correctAnswer) {
 			if (submission === correctAnswer) {
 				console.log("CORRECT!");
-				socket.id.rating++;
+				socket.id.rating += 100;
 				console.log("RATING FOR " + socket.id.name + " is:   " + socket.id.rating)
 				var result = "CORRECT";
 				var score = socket.id.rating;
+				var resultMessage = "Correct! +100 pts.";
+				socket.emit('transferresultmessage', resultMessage);
+				socket.id.streak++;
+				socket.id.streakReset = false;
+				if (socket.id.streakReset !== true && socket.id.streak > socket.id.highStreak) {
+					socket.id.highStreak++;
+					console.log('High streak for ' + socket.id.name + ' is: ' + socket.id.highStreak);
+				}
 			} else {
 				console.log("FALSE");
 				var result = "FALSE";
 				var score = socket.id.rating;
+				var resultMessage = "Incorrect (" + correctAnswer + ")";
+				socket.emit('transferresultmessage', resultMessage);
+				socket.id.streak = 0;
 			}
-			//Create and re-create score list
-
 		}
 	});
+	
+	socket.on('resetstreak', function() {
+		socket.id.streak = 0;
+		socket.id.streakReset = true;
+	});
+
+
 
 	socket.on('requestscores', function(rightAnswer) {
-		var scoreList = ""; //Make the list of players and their scores
-		for (var i = 0; i < clients.length; i++) {
-			scoreList = scoreList + clients[i].name + " Score: " + clients[i].rating + "<br/>";
-		}
-		console.log(scoreList);
-		socket.emit('returnscores', scoreList, rightAnswer);
+		var myScore = socket.id.rating;
+		var myStreak = socket.id.streak;
+		var myHighStreak = socket.id.highStreak;
+		var tempRank = "..."
+		socket.emit('returnscores', rightAnswer, myScore, myStreak, tempRank, myHighStreak);
 	});
 
 	socket.on('setq1', function() {
@@ -110,6 +132,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question1';
 		io.emit('change_header', {
 			header: header,
+			qNum: 1,
 			answerA: q1[1],
 			answerB: q1[2],
 			answerC: q1[3],
@@ -125,6 +148,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question2';
 		io.emit('change_header', {
 			header: header,
+			qNum: 2,
 			answerA: q2[1],
 			answerB: q2[2],
 			answerC: q2[3],
@@ -140,6 +164,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question3';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 3,		    
 		    answerA: q3[1],
 		    answerB: q3[2],
 		    answerC: q3[3],
@@ -156,6 +181,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question4';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 4,
 		    answerA: q4[1],
 		    answerB: q4[2],
 		    answerC: q4[3],
@@ -171,6 +197,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question5';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 5,
 		    answerA: q5[1],
 		    answerB: q5[2],
 		    answerC: q5[3],
@@ -186,6 +213,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question6';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 6,
 		    answerA: q6[1],
 		    answerB: q6[2],
 		    answerC: q6[3],
@@ -201,6 +229,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question7';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 7,
 		    answerA: q7[1],
 		    answerB: q7[2],
 		    answerC: q7[3],
@@ -216,6 +245,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question8';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 8,
 		    answerA: q8[1],
 		    answerB: q8[2],
 		    answerC: q8[3],
@@ -231,6 +261,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question9';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 9,
 		    answerA: q9[1],
 		    answerB: q9[2],
 		    answerC: q9[3],
@@ -246,6 +277,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question10';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 10,
 		    answerA: q10[1],
 		    answerB: q10[2],
 		    answerC: q10[3],
@@ -261,6 +293,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question11';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 11,
 		    answerA: q11[1],
 		    answerB: q11[2],
 		    answerC: q11[3],
@@ -276,6 +309,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question12';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 12,
 		    answerA: q12[1],
 		    answerB: q12[2],
 		    answerC: q12[3],
@@ -291,6 +325,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question13';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 13,
 		    answerA: q13[1],
 		    answerB: q13[2],
 		    answerC: q13[3],
@@ -306,6 +341,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question14';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 14,
 		    answerA: q14[1],
 		    answerB: q14[2],
 		    answerC: q14[3],
@@ -321,6 +357,7 @@ io.on('connection', function(socket) {
 		questionNumber = 'question15';
 		io.emit('change_header', {
 		    header: header,
+			qNum: 15,
 		    answerA: q15[1],
 		    answerB: q15[2],
 		    answerC: q15[3],
@@ -354,6 +391,9 @@ function MakeObj(socketid) {
 	this.name = socketid;
 	this.rating = 0;
 	this.nickname = undefined;
+	this.streak = 0;
+	this.highStreak = 0;
+	this.streakReset = false;
 }
 
 var header = 'Get Ready...';
@@ -366,12 +406,94 @@ var questionNumber = 'question1';
 io.on('connection', function(socket) {
     socket.emit('change_header', {
         header: header,
+        qNum: 0,
         answerA: answerA1,
         answerB: answerB1,
         answerC: answerC1,
         answerD: answerD1
     });
+    socket.on('getRanks', function(socket) {
+		//Rank code
+    	var sorted = [];
+    	for (var u = 0; u < clients.length; u++) {
+    		clients[u].rank = 0;
+    		clients[u].tie = false;
+    		console.log("rank cleared to: " + clients[u].rank + " And rating is " + clients[u].rating);
+    	}
+		for (var i = 0; i < clients.length; i++) {
+			sorted.push(clients[i]);
+		}
+		sorted.sort(function(a, b) {
+			return b.rating-a.rating;
+		});
+		for(var i = 0; i < sorted.length; i++) {
+			// original ranking
+			sorted[i].rank = i + 1;   
+		}
+		function sortRanking() {
+			for (var k = 0; k < sorted.length; k++) {
+				for (var h = 1; h < sorted.length + 1; h++) {
+					if (sorted[k+h] !== undefined) {
+					    if (sorted[k+h].tie !== true) {
+					        if (sorted[k].rating === sorted[h + k].rating) {
+					            sorted[k].rank = k + 1;
+					            sorted[h + k].rank = k + 1;
+					            sorted[k].tie = true;
+					            sorted[h + k].tie = true;
+					        }
+					    }
+					}    
+				}
+			}
+		}
+		sortRanking();
+		for (var r = 0; r < clients.length; r++){
+			console.log("Rank for " + clients[r].name + " is: " + clients[r].rank);
+		}
+		//End of Rank code
+		scoreList = ""; //Make the list of players and their scores 
+		var newSorted = [];
+		for (var i = 0; i < clients.length; i++) {
+			newSorted.push(clients[i]);
+		}
+		newSorted.sort(function(a, b) {
+			return b.rating-a.rating;
+		});
+		var tableheading = '<table>' +
+   							'<tr>' +
+						      '<th class="place">Place</th>' +
+						      '<th class="player">Player</th>' +
+						      '<th class="score">Score</th>' +
+						      '<th class="hstreak">High Streak</th>' +
+						   '</tr>';
+		for (var i = 0; i < newSorted.length; i++) { 
+		  scoreList = scoreList + "<tr>" + "<td>" + newSorted[i].rank + "</td>" + "<td align='left'>" + newSorted[i].name + "</td>" + "<td>" + newSorted[i].rating + "</td>" + "<td>" + newSorted[i].highStreak + "</td>" + "<tr/>"; 
+		} 
+		scoreList = tableheading + scoreList + "</table>";
+		console.log(scoreList); 
+
+		var winners = [];
+		for (var i = 0; i < clients.length; i++) {
+			if (clients[i].rank === 1) {
+				winners.push(clients[i]);
+			}
+		}
+		console.log('Num winners: ' + winners.length);
+		winnerList = "";
+		for (var j = 0; j < winners.length; j++) {
+			winnerList = winnerList + winners[j].name + " ";
+		}
+		var winnerList2 = "Congratulations, " + winnerList + "!";
+		console.log(winnerList2);
+		io.emit('ranksready', winnerList2);
+	});
+	socket.on('requestrank', function(winnerList2){
+		var myRank = socket.id.rank;
+		socket.emit('publishrank', myRank, scoreList, winnerList2);
+	});
 });
+
+
 
 var q1 = ['What is the closest planet to the Sun?', 'Mars', 'Venus', 'Mercury', 'Earth'];
 var q2 = ['Who invented the modern toilet?', 'Sir John Harington', 'Thomas Edison', 'Emmett Lathrop Brown', 'Sir Henry Cole'];
@@ -391,8 +513,7 @@ var q15 = ['What is the hardest substance in the body?', 'Calcium', 'Enamel', 'C
 
 
 
-
-
+//Before Ranks are published, you could add '[Processing]' to the Rank div
 
 
 

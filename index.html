@@ -2,22 +2,245 @@
 <html>
   <head>
     <title>Mega Quiz</title>
+    <link rel="stylesheet" href="jquery.mCustomScrollbar.css" />
+    <script src="http://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript">
+    </script>
+    <script src="jquery.mCustomScrollbar.concat.min.js"></script>
     <style>
-      #playerslistdiv {border: solid 1px red}
-      #rankingdiv {border: solid 1px blue}
+    #messageplaceholder{
+      display: none;
+    }
+      #wrapper {
+        border: solid 1px #8f8d8c;
+        width: 750px;
+        margin: 0 auto;
+        background-image:url('greybg.png'); 
+        overflow: auto;
+        overflow-y:hidden;
+      }
+      #topbar {
+        border: solid 0px purple;
+        background-image: url('topbar.png');
+        background-repeat: repeat-x;
+        height: 63px;
+        margin-bottom: 40px;
+      }
+      #toplefttext {
+        float: left;
+        vertical-align: middle;
+        line-height: 55px;
+        padding-left: 15px;
+        font-family: Consolas, monaco, monospace;
+        font-size: 2em;
+        color: white;
+        font-weight: bold;
+        text-shadow: 2px 2px #535151;
+      }
+      #toprighttext {
+        float: right;
+        vertical-align: middle;
+        line-height: 55px;
+        padding-right: 15px;
+        font-family: Consolas, monaco, monospace;
+        font-size: 1.3em;
+        color: white;
+        text-shadow: 1px 1px #535151;
+      }
+      #questiondiv {
+        border: solid 1px #c9caca;
+        font-size: 1.4em;
+        font-weight: 600;
+        font-family: Consolas, monaco, monospace;
+        width: 600px;
+        margin: 0 auto;
+        padding: 7px;
+        background: white;
+      }
+      #buttons {
+        border: solid 0px yellow;
+        text-align: center;
+      }
+      .answer {
+        font-size: 17px;
+        color: white;
+        background: #3498db;
+        border: 0;
+        padding: 5px 8px 5px 8px;
+        border-bottom: 3px solid #2a8bcc;
+        position: relative;
+        vertical-align: top;
+        margin: .5em;
+      }
+      .answer:active {
+        top: 1px;
+      }
+      #timerdiv {
+        border: solid 0px orange;
+        width: 95px;
+        margin: 0 auto;
+        height: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+      }
+      #correctanswerdiv{
+        border: solid 1px #c9caca;
+        font-size: 1em;
+        font-family: Consolas, monaco, monospace;
+        width: 600px;
+        height: 30px;
+        margin: 0 auto;
+        line-height: 0px; /*Not sure why I need this but it works*/
+        vertical-align: middle;
+        background: white;
+        margin-bottom: 30px;
+        padding-left: 5px;
+      }
+      #playerstats {
+        border-top: solid 1px black;
+        border-right: solid 1px black;
+        float: left;
+        width: 374px;
+        height: 148px;
+        background-image:url('hoffman.png'); 
+      }
+      #righttopbar {
+        background-image:url('bottomtopbar.png');
+        background-repeat: repeat-x; 
+        border: solid 0px red;
+        font-family: Verdana;
+        font-size: 1em;
+        color: white;
+        text-shadow: 1px 1px #535151;
+        text-align: center;
+        line-height: 27px;
+        vertical-align: center;
+        height: 32px;
+      }
+      #statdetails1 {
+        float: left;
+        border: solid 0px green;
+        width: 130px;
+        margin-top: 21px;
+        padding-left: 40px;
+        font-family: Verdana;
+        font-size: 18px;
+        line-height: 190%;
+        color: black;
+      }
+      #statdetails2 {
+        float: right;
+        border: solid 0px red;
+        width: 145px;
+        margin-top: 21px;
+        margin-right: 45px;
+        font-family: Verdana;
+        font-size: 18px;
+        line-height: 190%;
+        color: black;
+      }
+      #allplayers {
+        border-top: solid 1px black;
+        float: right;
+        width: 375px;
+        height: 148px;
+        background-image:url('hoffman.png'); 
+      }
+      #lefttopbar {
+        background-image:url('bottomtopbar.png');
+        background-repeat: repeat-x; 
+        border: solid 0px red;
+        font-family: Verdana;
+        font-size: 1em;
+        color: white;
+        text-shadow: 1px 1px #535151;
+        text-align: center;
+        line-height: 27px;
+        vertical-align: center;
+        height: 32px;
+      }
+      #playerdetails1 {
+        border: solid 0px blue;
+        height: 118px;
+        margin-top: -3px;
+        overflow: auto;
+        overflow-x: hidden;
+        font-family: Verdana;
+        font-size: 10px;
+        padding-top: -10px;
+        width: 300px;
+        margin: 0 auto;
+        vertical-align: center;
+        text-align: center;
+      }
+      table
+      {
+          table-layout: fixed;
+          width: 100%;
+          border: solid 0px black;
+          border-collapse: collapse;
+      }
+      th.place {
+        text-align:center; 
+        width: 20%;
+      }
+      th.player {
+        text-align: left;
+        width: 30%;
+      }
+      th.score {
+        text-align:center; 
+        width: 20%;
+      }
+      th.hstreak {
+        text-align:center; 
+        width: 20%;
+      }
+      td {
+        border: solid 0px black;
+      }
+      tr {
+          border-bottom: 1px solid black;
+          border-top: 0px solid black;
+      }​
     </style>
   </head>
   <body>
-    Enter your name:
-    <form onSubmit="return submitName();">
-      <input type="text" id="namefield">
-      <input type="submit" value="Set nickname">
-    </form>
-    <img src="unnamed.jpg">
-    <br/>
-    <br/>
+  <audio id="myTune">
+    <source src="E.wav">
+  </audio>
+  <audio id ="notintime">
+    <source src="wrong1.wav">
+  </audio>
+  <audio id ="load">
+    <source src="load.wav">
+  </audio>
+  <audio id ="right">
+    <source src="right.wav">
+  </audio>
+  <audio id ="wrong">
+    <source src="wrong2.wav">
+  </audio>
+  <audio id ="applause">
+    <source src="applause.wav">
+  </audio>
+  Enter your name:
+  <form onSubmit="return submitName();">
+    <input type="text" id="namefield">
+    <input type="submit" value="Set nickname">
+  </form>
+  <div id="wrapper">
+    <div id="topbar">
+      <div id="toplefttext">
+        MEGA QUIZ
+      </div>
+      <div id="toprighttext">
+        Question <span id="thequestionnumber">0</span> of 15
+      </div>
+    </div>
     <div id="hiddenbutton" style="display:none;">
       ADMIN PANEL<br/>
+      <input type="button" id="E" value="Ranks" onClick="triggerEvent();"><br/>
       <input type="button" id="a1" value="Set Q1" onClick="setQ('setq1', 'a1');"><br/>
       <input type="button" id="a2" value="Set Q2" onClick="setQ('setq2', 'a2');"><br/>
       <input type="button" id="a3" value="Set Q3" onClick="setQ('setq3', 'a3');"><br/>
@@ -34,44 +257,78 @@
       <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
       <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
     </div>
-    <button onclick="document.getElementById('myTune').play()">Play Music</button>
-    <audio id="myTune">
-      <source src="E.wav">
-    </audio>
-    <span id="timer"></span><br/>
-    Question: <h2 id="header"></h2>
-    <p>
-      <input type="button" id="A" class="answer" onClick="submitAnswer('A');">
-      <input type="button" id="B" class="answer" onClick="submitAnswer('B');">
-      <input type="button" id="C" class="answer" onClick="submitAnswer('C');">
-      <input type="button" id="D" class="answer" onClick="submitAnswer('D');">
-    </p>
-
-    <p id="correctanswerp"></p>
-    <div id="playerslistdiv">
-      <strong>List of Players</strong><p id="playersp"></p>
+    <div id="questiondiv">
+      <span id="header"></span>
     </div>
-    <div id="rankingdiv">
-      <strong>Ranking</strong><p id="rankingp"></p>
+    <div id="buttons">
+      <p>
+        <input type="button" id="A" class="answer" onClick="submitAnswer('A'); playMusic();">
+        <input type="button" id="B" class="answer" onClick="submitAnswer('B'); playMusic();">
+        <input type="button" id="C" class="answer" onClick="submitAnswer('C'); playMusic();">
+        <input type="button" id="D" class="answer" onClick="submitAnswer('D'); playMusic();">
+      </p>
     </div>
-    <DIV ID="textDestination" class="news">...</DIV>
+    <div id="timerdiv">
+      <span id="timer"></span>
+    </div>
+    <br/>
+    <div id="correctanswerdiv">
+      <p id="correctanswerp"></p>
+    </div>
+    <div id="messageplaceholder">Placeholder text</div>
+    <br/>
+    <div id="playerstats">
+      <div id="righttopbar">
+        <span id="playername">Player</span>
+      </div>
+      <div id="statdetails1">
+        Score: <span id="myscore" style="color: #d84c13"></span><br/>
+        Streak: <span id="mystreak" style="color: #d84c13"></span><br/>
+      </div>
+      <div id="statdetails2">
+        Rank: <span id="myrank" style="color: #d84c13"></span><br/>
+        High Streak: <span id="mytopstreak" style="color: #d84c13"></span><br/>
+      </div>
+    </div>
+    <div id="allplayers">
+      <div id="righttopbar">
+        Leaderboard
+      </div>
+      <div id="playerdetails1">
+        <span id="rankingp"></span>
+          </table>
+      </div>
+    </div>
+  </div>
 
+  <script>
+      (function($){
+          $(window).load(function(){
+              $("#playerdetails1").mCustomScrollbar();
+          });
+      })(jQuery);
+  </script>
+  <script>
+    $("#playerdetails1").mCustomScrollbar({
+        theme:"dark"
+    });
+  </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io();
-    var playerslist = document.getElementById('playersp');
-    var rankinglist = document.getElementById('rankingdiv');
     var rankingp = document.getElementById('rankingp');
     var buttons = document.getElementsByClassName("answer");
 
     //Emit a submitted answer on the buttons
     function submitAnswer(answer) {
       socket.emit('submission', document.getElementById(answer).value);
-      document.getElementById(answer).style.color = "blue";
+      document.getElementById(answer).style.color = "yellow";
       for (var i = 0; i < 4; i++) {
         buttons[i].disabled=true;
-        if (buttons[i].style.color != "blue") {
+        if (buttons[i].style.color != "yellow") {
           buttons[i].style.color = "gray";
+          buttons[i].style.background = "#bce5f9"; //Light blue
+          buttons[i].style.borderColor = "#a2cde2";
         }
       }
     };
@@ -82,15 +339,9 @@
         document.getElementById('hiddenbutton').style.display = "block";
       }
       socket.emit('newname', document.getElementById('namefield').value);
+      document.getElementById('playername').innerHTML = document.getElementById('namefield').value;
       return false; //Be careful with this | Used so the submit button doesn't refresh
     };
-
-    socket.on('returnplayers', function(nameboard){
-      var incomingplayer = document.createTextNode(nameboard);
-      playerslist.appendChild(incomingplayer);
-      var br = document.createElement("br");
-      playerslist.appendChild(br);
-    });
 
     document.addEventListener('DOMContentLoaded', function() {
       socket.on('change_header', function(data) {
@@ -99,12 +350,12 @@
           document.getElementById('B').value = data.answerB;
           document.getElementById('C').value = data.answerC;
           document.getElementById('D').value = data.answerD;
+          document.getElementById('thequestionnumber').innerHTML = data.qNum;
           startTyping(data.header, 20, 'header');
+          document.getElementById('load').play();
       });
     });
 
-
-    //
     function setQ(q, id) {
       socket.emit(q);
       document.getElementById(id).disabled=true;
@@ -112,34 +363,67 @@
 
     socket.on('disablebuttons', function(rightAnswer) {
       setTimeout(function() {
+        var buttonsUnselected = 0;
         for (var i = 0; i < 4; i++) {
           buttons[i].disabled=true;
-          if (buttons[i].style.color != "blue") {
+          if (buttons[i].style.color != "yellow") {
             buttons[i].style.color = "gray";
+            buttons[i].style.background = "#bce5f9"; //Light blue
+            buttons[i].style.borderColor = "#a2cde2";
           }
+          if (buttons[i].style.color != "yellow") {
+            buttonsUnselected++;
+          }
+        }
+        if (buttonsUnselected === 4) {
+          document.getElementById('messageplaceholder').innerHTML = "Answer not placed in time";
+          document.getElementById('notintime').play();
+          socket.emit('resetstreak');
         }
         // Return scores now
         setTimeout(function() {
           socket.emit('requestscores', rightAnswer);
           for (var i = 0; i < buttons.length; i++) {
             if (buttons[i].value === rightAnswer) {
-              buttons[i].style.background = "#2eff69";
+              buttons[i].style.background = "#2eff69"; //Bright green
+              buttons[i].style.borderColor = "#20d453";
+              buttons[i].style.color = "black";
             }
+          }
+          if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
+            setTimeout(function() {
+              document.getElementById('applause').play();
+            }, 4000);
           }
         }, 2000);
       }, 8000);
     });
 
-    socket.on('returnscores', function(scoreList, rightAnswer) {
-      document.getElementById('correctanswerp').innerHTML = "Correct Answer: " + rightAnswer;
-      rankingp.innerHTML = scoreList;
+    socket.on('returnscores', function(rightAnswer, myScore, myStreak, tempRank, myHighStreak) {
+      document.getElementById('correctanswerp').innerHTML = document.getElementById('messageplaceholder').innerHTML;
+      if (document.getElementById('correctanswerp').innerHTML.charAt(0) === "C") {
+        document.getElementById('correctanswerp').style.color = "green";
+        document.getElementById('right').play();
+      } else {
+        document.getElementById('correctanswerp').style.color = "red";
+        document.getElementById('wrong').play();
+      };
+      document.getElementById('myscore').innerHTML = myScore;
+      document.getElementById('mystreak').innerHTML = myStreak;
+      document.getElementById('myrank').innerHTML = tempRank;
+      document.getElementById('mytopstreak').innerHTML = myHighStreak;
+    });
+
+    socket.on('transferresultmessage', function(resultMessage) {
+        document.getElementById('messageplaceholder').innerHTML = resultMessage;
     });
 
     socket.on('settimer', function() {
       document.getElementById('correctanswerp').innerHTML = "";
       for (var i = 0; i < 4; i++) {
-        buttons[i].style.color = "black";
-        buttons[i].style.background = "#FCFCFC";
+        buttons[i].style.color = "white";
+        buttons[i].style.background = "#3498db";
+        buttons[i].style.borderColor = "#2a8bcc";
         buttons[i].disabled=false;
       }
       var count = 8;
@@ -156,8 +440,6 @@
 </script>
 
 <script>//Typing script
-  var text2 = "This is cool";
-
   var delay=50;
   var currentChar=1;
   var destination="[none]";
@@ -192,7 +474,28 @@
     type();
   }
 
+  function playMusic(){
+    document.getElementById('myTune').play();
+  }
 
+  function triggerEvent(){
+    socket.emit('getRanks');
+  }
+
+  socket.on('ranksready', function(winnerList2) {
+    socket.emit('requestrank', winnerList2);
+  });
+
+  socket.on('publishrank', function(myRank, scoreList, winnerList2){
+    document.getElementById('myrank').innerHTML = myRank;
+    rankingp.innerHTML = scoreList || ""; //Needed for IE otherwise it says "null"
+    // End Game Stuff
+    if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
+      setTimeout(function() {
+        document.getElementById('correctanswerp').innerHTML = winnerList2;
+      }, 3200);
+    }
+  });
 </script>
 </body>
 </html>
