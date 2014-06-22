@@ -3,6 +3,11 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
+
 app.get('/', function(req, res) {
 	res.sendfile('index.html');
 });
@@ -483,7 +488,7 @@ io.on('connection', function(socket) {
 		for (var j = 0; j < winners.length; j++) {
 			winnerList = winnerList + winners[j].name + " ";
 		}
-		var winnerList2 = "Congratulations, " + winnerList + "!";
+		var winnerList2 = "Congratulations, " + winnerList;
 		console.log(winnerList2);
 		io.emit('ranksready', winnerList2);
 	});
