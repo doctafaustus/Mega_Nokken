@@ -19,18 +19,13 @@ var list = "";
 var scoreList;
 
 
-io.on('connection', function(socket) {
-  var id = setInterval(function() {
-    socket.send(JSON.stringify(new Date()), function() {  });
-  }, 1000);
-
-  console.log('websocket connection open');
-
-  socket.on('close', function() {
-    console.log('websocket connection close');
-    clearInterval(id);
-  });
-});
+io.onopen = function()  { 
+      console.log('websocket opened');
+      setInterval(function() {
+        if (ws.bufferedAmount == 0)
+          ws.send("Keep alive from client"  );
+        }, 5000 );
+};
 
                     
 io.on('connection', function(socket) {
