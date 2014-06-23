@@ -18,7 +18,7 @@ var clients = [];
 var list = "";
 var scoreList;
 
-
+//Needed for Heroku to have client's connection working properly
 io.onopen = function()  { 
       console.log('websocket opened');
       setInterval(function() {
