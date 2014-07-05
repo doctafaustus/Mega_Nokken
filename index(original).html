@@ -235,7 +235,7 @@
         MEGA QUIZ
       </div>
       <div id="toprighttext">
-        Question <span id="thequestionnumber">0</span> of 20
+        Question <span id="thequestionnumber">0</span> of 15
       </div>
     </div>
     <div id="hiddenbutton" style="display:none;">
@@ -256,11 +256,6 @@
       <input type="button" id="a13" value="Set Q13" onClick="setQ('setq13', 'a13');"><br/>
       <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
       <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
-      <input type="button" id="a16" value="Set Q16" onClick="setQ('setq16', 'a16');"><br/>
-      <input type="button" id="a17" value="Set Q17" onClick="setQ('setq17', 'a17');"><br/>
-      <input type="button" id="a18" value="Set Q18" onClick="setQ('setq18', 'a18');"><br/>
-      <input type="button" id="a19" value="Set Q19" onClick="setQ('setq19', 'a19');"><br/>
-      <input type="button" id="a20" value="Set Q20" onClick="setQ('setq20', 'a20');"><br/>      
     </div>
     <div id="questiondiv">
       <span id="header"></span>
@@ -395,13 +390,13 @@
               buttons[i].style.color = "black";
             }
           }
-          if (document.getElementById('thequestionnumber').innerHTML === "20") {
+          if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
             setTimeout(function() {
               document.getElementById('applause').play();
             }, 4000);
           }
         }, 2000);
-      }, 10000);
+      }, 8000);
     });
 
     socket.on('returnscores', function(rightAnswer, myScore, myStreak, tempRank, myHighStreak) {
@@ -431,7 +426,7 @@
         buttons[i].style.borderColor = "#2a8bcc";
         buttons[i].disabled=false;
       }
-      var count = 10;
+      var count = 8;
       var counter = setInterval(timer, 1000);
       function timer() {
         count = count - 1;
@@ -495,7 +490,7 @@
     document.getElementById('myrank').innerHTML = myRank;
     rankingp.innerHTML = scoreList || ""; //Needed for IE otherwise it says "null"
     // End Game Stuff
-    if (document.getElementById('thequestionnumber').innerHTML === "20") {
+    if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
       setTimeout(function() {
         document.getElementById('correctanswerp').innerHTML = winnerList2;
       }, 3200);
