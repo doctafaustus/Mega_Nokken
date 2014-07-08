@@ -8,8 +8,20 @@
     </script>
     <script src="jquery.mCustomScrollbar.concat.min.js"></script>
     <style>
+    body {
+      background-color: white;
+    }
     #messageplaceholder{
       display: none;
+    }
+    #entername {
+      margin: 0 auto;
+      border: solid 1px black;
+      width: 750px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      background-color: blue;
+      padding: 10px 0 10px 0;
     }
       #wrapper {
         border: solid 1px #8f8d8c;
@@ -32,7 +44,7 @@
         line-height: 55px;
         padding-left: 15px;
         font-family: Consolas, monaco, monospace;
-        font-size: 2em;
+        font-size: 1.7em;
         color: white;
         font-weight: bold;
         text-shadow: 2px 2px #535151;
@@ -224,15 +236,16 @@
   <audio id ="applause">
     <source src="applause.wav">
   </audio>
-  Enter your name:
-  <form onSubmit="return submitName();">
-    <input type="text" id="namefield">
-    <input type="submit" value="Set nickname">
-  </form>
+  <div id="entername">
+    <form onSubmit="return submitName();">
+      <input type="text" id="namefield" value="Enter Your Name" onClick="document.getElementById('namefield').value = ''">
+      <input type="submit" value="Set Nickname" id="submitbutton" onClick="document.getElementById('entername').style.display = 'none';">
+    </form>
+  </div>
   <div id="wrapper">
     <div id="topbar">
       <div id="toplefttext">
-        MEGA QUIZ
+        How Well Do You Know ME?
       </div>
       <div id="toprighttext">
         Question <span id="thequestionnumber">0</span> of 20
