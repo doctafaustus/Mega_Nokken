@@ -50,49 +50,64 @@ io.on('connection', function(socket) {
 		console.log(submission);
 		switch(questionNumber) {
 			case "question1" : 
-				getResults('Mercury');
+				getResults('\'Elaina\'');
 				break;
 			case "question2" :
-				getResults('Sir John Harington');
+				getResults('Awkward');
 				break;
 			case "question3" :
-				getResults('Gary Jackson');
+				getResults('Scorpio');
 				break;
 			case "question4" :
-				getResults('Sword');
+				getResults('Peanut Butter');
 				break;
 			case "question5" : 
-				getResults('Patella');
+				getResults('Maury');
 				break;
 			case "question6" : 
-				getResults('Transformers: Evolution');
+				getResults('Cooking');
 				break;
 			case "question7" :
-				getResults('Tommy Lee Jones');
+				getResults('1');
 				break;
 			case "question8" :
-				getResults('Shuttlecock');
+				getResults('Mom\'s spaghetti sauce');
 				break;
 			case "question9" :
-				getResults('Rage');
+				getResults('Vermont');
 				break;
 			case "question10" : 
-				getResults('Hydrogen');
+				getResults('The Bachelorette');
 				break;
 			case "question11" : 
-				getResults('New York');
+				getResults('Both');
 				break;
 			case "question12" :
-				getResults('Wendy\'s');
+				getResults('She cannot swim');
 				break;
 			case "question13" :
-				getResults('Casper');
+				getResults('Life Expectancy');
 				break;
 			case "question14" :
-				getResults('Wine');
+				getResults('The Giving Tree');
 				break;
 			case "question15" : 
-				getResults('Enamel');
+				getResults('Modern Family');
+				break;
+			case "question16" : 
+				getResults('Bronx Community Charter School');
+				break;	
+			case "question17" : 
+				getResults('Alter Server');
+				break;	
+			case "question18" : 
+				getResults('6');
+				break;	
+			case "question19" : 
+				getResults('Scrapbooking');
+				break;	
+			case "question20" : 
+				getResults('Machu Picchu, Peru');
 				break;	
 		}
 
@@ -149,7 +164,7 @@ io.on('connection', function(socket) {
 			answerC: q1[3],
 			answerD: q1[4]
 		});
-		var rightAnswer = q1[3];
+		var rightAnswer = q1[2];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});
@@ -165,7 +180,7 @@ io.on('connection', function(socket) {
 			answerC: q2[3],
 			answerD: q2[4]
 		});
-		var rightAnswer = q2[1];
+		var rightAnswer = q2[2];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});
@@ -198,7 +213,7 @@ io.on('connection', function(socket) {
 		    answerC: q4[3],
 		    answerD: q4[4]
 		});
-		var rightAnswer = q4[1];
+		var rightAnswer = q4[3];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});
@@ -214,7 +229,7 @@ io.on('connection', function(socket) {
 		    answerC: q5[3],
 		    answerD: q5[4]
 		});
-		var rightAnswer = q5[2];
+		var rightAnswer = q5[4];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});	
@@ -230,7 +245,7 @@ io.on('connection', function(socket) {
 		    answerC: q6[3],
 		    answerD: q6[4]
 		});
-		var rightAnswer = q6[4];
+		var rightAnswer = q6[2];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});		
@@ -246,7 +261,7 @@ io.on('connection', function(socket) {
 		    answerC: q7[3],
 		    answerD: q7[4]
 		});
-		var rightAnswer = q7[2];
+		var rightAnswer = q7[1];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});
@@ -278,7 +293,7 @@ io.on('connection', function(socket) {
 		    answerC: q9[3],
 		    answerD: q9[4]
 		});
-		var rightAnswer = q9[2];
+		var rightAnswer = q9[4];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});	
@@ -294,7 +309,7 @@ io.on('connection', function(socket) {
 		    answerC: q10[3],
 		    answerD: q10[4]
 		});
-		var rightAnswer = q10[2];
+		var rightAnswer = q10[3];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});		
@@ -310,7 +325,7 @@ io.on('connection', function(socket) {
 		    answerC: q11[3],
 		    answerD: q11[4]
 		});
-		var rightAnswer = q11[2];
+		var rightAnswer = q11[3];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});	
@@ -342,7 +357,7 @@ io.on('connection', function(socket) {
 		    answerC: q13[3],
 		    answerD: q13[4]
 		});
-		var rightAnswer = q13[3];
+		var rightAnswer = q13[4];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});	
@@ -358,7 +373,7 @@ io.on('connection', function(socket) {
 		    answerC: q14[3],
 		    answerD: q14[4]
 		});
-		var rightAnswer = q14[4];
+		var rightAnswer = q14[1];
 		io.emit('settimer');
 		io.emit('disablebuttons', rightAnswer);
 	});	
@@ -379,6 +394,85 @@ io.on('connection', function(socket) {
 		io.emit('disablebuttons', rightAnswer);
 	});	
 
+	socket.on('setq16', function() {
+		header = q16[0];
+		questionNumber = 'question16';
+		io.emit('change_header', {
+		    header: header,
+			qNum: 16,
+		    answerA: q16[1],
+		    answerB: q16[2],
+		    answerC: q16[3],
+		    answerD: q16[4]
+		});
+		var rightAnswer = q16[3];
+		io.emit('settimer');
+		io.emit('disablebuttons', rightAnswer);
+	});	
+
+	socket.on('setq17', function() {
+		header = q17[0];
+		questionNumber = 'question17';
+		io.emit('change_header', {
+		    header: header,
+			qNum: 17,
+		    answerA: q17[1],
+		    answerB: q17[2],
+		    answerC: q17[3],
+		    answerD: q17[4]
+		});
+		var rightAnswer = q17[4];
+		io.emit('settimer');
+		io.emit('disablebuttons', rightAnswer);
+	});	
+
+	socket.on('setq18', function() {
+		header = q18[0];
+		questionNumber = 'question18';
+		io.emit('change_header', {
+		    header: header,
+			qNum: 18,
+		    answerA: q18[1],
+		    answerB: q18[2],
+		    answerC: q18[3],
+		    answerD: q18[4]
+		});
+		var rightAnswer = q18[4];
+		io.emit('settimer');
+		io.emit('disablebuttons', rightAnswer);
+	});	
+
+	socket.on('setq19', function() {
+		header = q19[0];
+		questionNumber = 'question19';
+		io.emit('change_header', {
+		    header: header,
+			qNum: 19,
+		    answerA: q19[1],
+		    answerB: q19[2],
+		    answerC: q19[3],
+		    answerD: q19[4]
+		});
+		var rightAnswer = q19[1];
+		io.emit('settimer');
+		io.emit('disablebuttons', rightAnswer);
+	});	
+
+	socket.on('setq20', function() {
+		header = q20[0];
+		questionNumber = 'question20';
+		io.emit('change_header', {
+		    header: header,
+			qNum: 20,
+		    answerA: q20[1],
+		    answerB: q20[2],
+		    answerC: q20[3],
+		    answerD: q20[4]
+		});
+		var rightAnswer = q20[2];
+		io.emit('settimer');
+		io.emit('disablebuttons', rightAnswer);
+	});	
 	socket.on('disconnect', function() {
 		console.log(socket.id.name + ' disconneted');
 		clients.splice(clients.indexOf(socket.id), 1);
@@ -506,27 +600,26 @@ io.on('connection', function(socket) {
 
 
 
-var q1 = ['What is the closest planet to the Sun?', 'Mars', 'Venus', 'Mercury', 'Earth'];
-var q2 = ['Who invented the modern toilet?', 'Sir John Harington', 'Thomas Edison', 'Emmett Lathrop Brown', 'Sir Henry Cole'];
-var q3 = ['Who was not a member of the Jackson 5?', 'Tito Jackson', 'Jermaine Jackson', 'Marlon Jackson', 'Gary Jackson'];
-var q4 = ['What kind of weapon is a falchion?', 'Sword', 'Axe', 'Bow', 'Gun'];
-var q5 = ['The kneecap is also known as what?', 'Tibia', 'Patella', 'Sphenoid', 'Clavicle'];
-var q6 = ['Which of the following is not a Transformers TV series?', 'Transformers: Prime', 'Transformers: Beast Wars', 'Transformers: Beast Machines', 'Transformers: Evolution'];
-var q7 = ['Which of the following actors is the youngest?', 'Dustin Hoffman', 'Tommy Lee Jones', 'Robert De Niro', 'Harrison Ford'];
-var q8 = ['What is the \'birdie\' in the game of badminton also known as?', 'Shuttlecock', 'Dart', 'Toypedo', 'Arrow'];
-var q9 = ['Which of the following is not one of the Seven Deadly Sins?', 'Pride', 'Rage', 'Lust', 'Avarice'];
-var q10 = ['What is the first element on the periodic table?', 'Helium', 'Hydrogen', 'Oxygen', 'Carbon'];
-var q11 = ['What is the 3rd most populous state?', 'Texas', 'New York', 'Ohio', 'Illinois'];
-var q12 = ['What company originated the catchphrase \'Where\'s the beef?\'?', 'Purdue', 'Arby\'s', 'Oscar Mayer', 'Wendy\'s'];
-var q13 = ['Who is known as \'The Friendly Ghost\'?', 'Boo', 'Slimer', 'Casper', 'Beetlejuice'];
-var q14 = ['What type of beverage is associated with a sommelier?', 'Ale', 'Tequila', 'Lager', 'Wine'];
-var q15 = ['What is the hardest substance in the body?', 'Calcium', 'Enamel', 'Collagen', 'Keratin'];
-
-
-
-//Before Ranks are published, you could add '[Processing]' to the Rank div
-
-
+var q1 = ['Which of these is listed as MEAZ’s middle name on her birth certificate?', '\'Angela\'', '\'Elaina\'', 'Nothing', '\'Michele\''];
+var q2 = ['MEAZ describes herself as \'The embodiment of _____\'?', 'Cool', 'Awkward', 'Awesome', 'Weird'];
+var q3 = ['What is MEAZ\'s astrological sign?', 'Virgo', 'Gemini', 'Cancer', 'Scorpio'];
+var q4 = ['What item did MEAZ put on her turkey hot dogs as a kid?', 'Ketchup', 'Mustard', 'Peanut Butter', 'Relish'];
+var q5 = ['MEAZ is a huge fan of what trashy daytime TV show?', 'Wendy Williams', 'Montel', 'Jerry Springer', 'Maury'];
+var q6 = ['MEAZ is LEAST skilled in which of the following activities?', 'Karaoke', 'Cooking', 'Bowling', 'Donating Blood'];
+var q7 = ['How many siblings does MEAZ have?', '1', '2', '0', '3'];
+var q8 = ['What is MEAZ\'s favorite food?', 'Mom\'s spaghetti sauce', 'Buffalo chicken', 'Burritos', 'Ice Cream'];
+var q9 = ['Where does MEAZ\'s family vacation every year?', 'They never go to the same place twice', 'California', 'Florida', 'Vermont'];
+var q10 = ['Which reality TV show does MEAZ watch?', 'Jersey Shore', 'Keeping up with the Kardashians', 'The Bachelorette', 'Amazing Race'];
+var q11 = ['MEAZ volunteered at which museum?', 'Tackapausha', 'The Museum of Natural History', 'Both', 'Neither'];
+var q12 = ['Which of these is NOT true about MEAZ?', 'She cannot drive', 'She likes cats', 'She is part of a book club', 'She cannot swim'];
+var q13 = ['Which of these books does MEAZ like best?', 'Catcher in the Rye', 'Life of Pi', 'Sense and Sensibility', 'Life Expectancy'];
+var q14 = ['Which of these children\'s books does MEAZ like the least?', 'The Giving Tree', 'The Lorax', 'The Paperbag Princess', 'The Three Little Pigs'];
+var q15 = ['Which of these TV shows does MEAZ like best?', 'Orange is the New Black', 'Modern Family', 'Law and Order: SVU', 'Friends'];
+var q16 = ['MEAZ works at which of these schools?', 'Bronx Charter School for the Arts', 'Bronx Charter School for Children', 'Bronx Community Charter School', 'Bronx Lighthouse Charter School'];
+var q17 = ['Which one of these jobs has MEAZ never done at Church?', 'Lector', 'Eucharistic Minister', 'Sacristan', 'Alter Server'];
+var q18 = ['How many years has MEAZ been teaching?', '3', '4', '5', '6'];
+var q19 = ['MEAZ enjoys which creative activity best?', 'Scrapbooking', 'Painting', 'Sculpting', 'Photography'];
+var q20 = ['Which of the \'New 7 Wonders of the World\' does MEAZ want to see the most?', 'The Great Wall of China', 'Machu Picchu, Peru', 'Christ the Redeemer, Brazil', 'Colosseum, Italy'];
 
 
 	
