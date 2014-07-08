@@ -334,6 +334,7 @@
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
+  var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
     var socket = io();
     var rankingp = document.getElementById('rankingp');
     var buttons = document.getElementsByClassName("answer");
@@ -371,7 +372,9 @@
           document.getElementById('D').value = data.answerD;
           document.getElementById('thequestionnumber').innerHTML = data.qNum;
           startTyping(data.header, 20, 'header');
-          document.getElementById('load').play();
+          if (!isSafari) {
+            document.getElementById('load').play();
+          }
       });
     });
 
@@ -396,7 +399,9 @@
         }
         if (buttonsUnselected === 4) {
           document.getElementById('messageplaceholder').innerHTML = "Answer not placed in time";
-          document.getElementById('notintime').play();
+          if (!isSafari) {
+            document.getElementById('notintime').play();
+          }
           socket.emit('resetstreak');
         }
         // Return scores now
@@ -411,7 +416,9 @@
           }
           if (document.getElementById('thequestionnumber').innerHTML === "20") {
             setTimeout(function() {
-              document.getElementById('applause').play();
+              if (!isSafari) {
+                document.getElementById('applause').play();
+              }
             }, 4000);
           }
         }, 2000);
@@ -422,10 +429,14 @@
       document.getElementById('correctanswerp').innerHTML = document.getElementById('messageplaceholder').innerHTML;
       if (document.getElementById('correctanswerp').innerHTML.charAt(0) === "C") {
         document.getElementById('correctanswerp').style.color = "green";
-        document.getElementById('right').play();
+        if (!isSafari) {
+          document.getElementById('right').play();
+        }
       } else {
         document.getElementById('correctanswerp').style.color = "red";
-        document.getElementById('wrong').play();
+        if (!isSafari) {
+          document.getElementById('wrong').play();
+        }
       };
       document.getElementById('myscore').innerHTML = myScore;
       document.getElementById('mystreak').innerHTML = myStreak;
@@ -494,7 +505,9 @@
   }
 
   function playMusic(){
-    document.getElementById('myTune').play();
+    if (!isSafari) {
+      document.getElementById('myTune').play();
+    }
   }
 
   function triggerEvent(){
