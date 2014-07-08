@@ -8,8 +8,20 @@
     </script>
     <script src="jquery.mCustomScrollbar.concat.min.js"></script>
     <style>
+    body {
+      background-color: white;
+    }
     #messageplaceholder{
       display: none;
+    }
+    #entername {
+      margin: 0 auto;
+      border: solid 1px black;
+      width: 750px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      background-color: white;
+      padding: 5px 0 5px 0;
     }
       #wrapper {
         border: solid 1px #8f8d8c;
@@ -32,7 +44,7 @@
         line-height: 55px;
         padding-left: 15px;
         font-family: Consolas, monaco, monospace;
-        font-size: 2em;
+        font-size: 1.7em;
         color: white;
         font-weight: bold;
         text-shadow: 2px 2px #535151;
@@ -224,18 +236,20 @@
   <audio id ="applause">
     <source src="applause.wav">
   </audio>
+  <div id="entername">
   Enter your name:
   <form onSubmit="return submitName();">
     <input type="text" id="namefield">
     <input type="submit" value="Set nickname">
   </form>
+  </div>
   <div id="wrapper">
     <div id="topbar">
       <div id="toplefttext">
-        MEGA QUIZ
+        How Well Do You Know ME?
       </div>
       <div id="toprighttext">
-        Question <span id="thequestionnumber">0</span> of 15
+        Question <span id="thequestionnumber">0</span> of 20
       </div>
     </div>
     <div id="hiddenbutton" style="display:none;">
@@ -256,6 +270,11 @@
       <input type="button" id="a13" value="Set Q13" onClick="setQ('setq13', 'a13');"><br/>
       <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
       <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
+      <input type="button" id="a16" value="Set Q16" onClick="setQ('setq16', 'a16');"><br/>
+      <input type="button" id="a17" value="Set Q17" onClick="setQ('setq17', 'a17');"><br/>
+      <input type="button" id="a18" value="Set Q18" onClick="setQ('setq18', 'a18');"><br/>
+      <input type="button" id="a19" value="Set Q19" onClick="setQ('setq19', 'a19');"><br/>
+      <input type="button" id="a20" value="Set Q20" onClick="setQ('setq20', 'a20');"><br/>      
     </div>
     <div id="questiondiv">
       <span id="header"></span>
@@ -390,13 +409,13 @@
               buttons[i].style.color = "black";
             }
           }
-          if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
+          if (document.getElementById('thequestionnumber').innerHTML === "20") {
             setTimeout(function() {
               document.getElementById('applause').play();
             }, 4000);
           }
         }, 2000);
-      }, 8000);
+      }, 10000);
     });
 
     socket.on('returnscores', function(rightAnswer, myScore, myStreak, tempRank, myHighStreak) {
@@ -426,7 +445,7 @@
         buttons[i].style.borderColor = "#2a8bcc";
         buttons[i].disabled=false;
       }
-      var count = 8;
+      var count = 10;
       var counter = setInterval(timer, 1000);
       function timer() {
         count = count - 1;
@@ -490,7 +509,7 @@
     document.getElementById('myrank').innerHTML = myRank;
     rankingp.innerHTML = scoreList || ""; //Needed for IE otherwise it says "null"
     // End Game Stuff
-    if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
+    if (document.getElementById('thequestionnumber').innerHTML === "20") {
       setTimeout(function() {
         document.getElementById('correctanswerp').innerHTML = winnerList2;
       }, 3200);
