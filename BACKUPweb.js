@@ -16,9 +16,8 @@ app.use(express.static(__dirname + '/public'));
 
 var clients = [];
 var list = "";
-var nodeList;
 var scoreList;
-var leaderList;
+var nodeList;
 
 //Needed for Heroku to have client's connection working properly
 io.onopen = function()  { 
@@ -46,7 +45,6 @@ io.on('connection', function(socket) {
 			}
 		}
 		console.log("New name is " + socket.id.name);
-		socket.id.lastQIndicator = "<img src='gray.png'>" + "<span>" + socket.id.name + "</span>";
 	});
 
 	socket.on('submission', function(submission, submitTimeInMillis) {
@@ -144,7 +142,7 @@ io.on('connection', function(socket) {
 				socket.id.rightanswers++;
 				socket.id.qFaced = socket.id.rightanswers + socket.id.wronganswers + socket.id.notanswered;
 				console.log("Q Faced for " + socket.id.name +  ": " + socket.id.qFaced);
-				socket.id.lastQIndicator = "<img src='green.png'>" + "<span>" + socket.id.name + "</span>";
+				socket.id.lastQIndicator = "<img src='green.png' title='" + socket.id.name + "'" + ">";
 			} else {
 				console.log("FALSE");
 				var result = "FALSE";
@@ -155,7 +153,7 @@ io.on('connection', function(socket) {
 				socket.id.wronganswers++;
 				socket.id.qFaced = socket.id.rightanswers + socket.id.wronganswers + socket.id.notanswered;
 				console.log("Q Faced for " + socket.id.name +  ": " + socket.id.qFaced);
-				socket.id.lastQIndicator = "<img src='red.png'>" + "<span>" + socket.id.name + "</span>";
+				socket.id.lastQIndicator = "<img src='red.png' title='" + socket.id.name + "'" + ">";
 				socket.id.bonus = false;
 			}
 		}
@@ -176,7 +174,7 @@ io.on('connection', function(socket) {
 		console.log('NOT ANSWERD: ' + socket.id.name + "  " + socket.id.notanswered);
 		socket.id.qFaced = socket.id.rightanswers + socket.id.wronganswers + socket.id.notanswered;
 		console.log("Q Faced for " + socket.id.name +  ": " + socket.id.qFaced);
-		socket.id.lastQIndicator = "<img src='red.png'>" + "<span>" + socket.id.name + "</span>";
+		socket.id.lastQIndicator = "<img src='red.png' title='" + socket.id.name + "'" + ">";
 		socket.id.bonus = false;
 	});
 
@@ -462,14 +460,13 @@ function MakeObj(socketid) {
 	this.rightanswers = 0;
 	this.wronganswers = 0;
 	this.qFaced = this.notanswered + this.rightanswers + this.wronganswers;
-	this.lastQIndicator = "<img src='gray.png'>" + "<span>" + socketid + "</span>";
+	this.lastQIndicator = "<img src='gray.png' title='" + socketid + "'" + ">";
 	this.mySubmitTime = undefined;
 	this.myQuestionPresentTime = undefined;
 	this.myAnswerTime = undefined;
 	this.avgAnswerTimeArray = [];
 	this.myAverageAnswerTime = "--";
 	this.bonus = false;
-	this.onBoard = false;
 }
 
 var header = 'Get Ready...';
@@ -488,7 +485,7 @@ io.on('connection', function(socket) {
         answerC: answerC1,
         answerD: answerD1
     });
-    socket.on('getRanks', function() {
+    socket.on('getRanks', function(socket) {
 		//Rank code
     	var sorted = [];
     	for (var u = 0; u < clients.length; u++) {
@@ -528,9 +525,6 @@ io.on('connection', function(socket) {
 		}
 		//End of Rank code
 		scoreList = ""; //Make the list of players and their scores 
-		nodeList = ""; //Make the list of players and their scores 
-		leaderList = "";
-
 		var newSorted = [];
 		for (var i = 0; i < clients.length; i++) {
 			newSorted.push(clients[i]);
@@ -538,36 +532,6 @@ io.on('connection', function(socket) {
 		newSorted.sort(function(a, b) {
 			return b.rating-a.rating;
 		});
-
-		//Node Table
-		var nodetableheading = "<table id='nodeTable'>" + "<tr id='myRow'>" + "\n";
-		var nodeCounter = 0;
-		for (var i = 0; i < newSorted.length; i++) {
-			nodeCounter++;
-			console.log("nodeCounter value: " + nodeCounter);
-			if (nodeCounter % 13 === 0) {
-				nodeCounter = 0;
-				nodeList = nodeList + "</tr>" + "<tr>" + "<td class='tooltip'>" + newSorted[i].lastQIndicator + "</td>" + "\n";
-				nodeCounter++;
-			} else {
-				nodeList = nodeList + "<td class='tooltip'>" + newSorted[i].lastQIndicator + "</td>" + "\n";
-			} 
-		} 
-		nodeList = nodetableheading + nodeList + "</tr>" + "\n" + "</table>";
-		console.log(nodeList);
-
-		//Leaderboard
-		var leadertableheading = "<table id='leaderTable'>";
-		for (var i = 0; i < newSorted.length; i++) { 
-			if (i < 10) {
-			  leaderList = leaderList + "<tr>" + "<td class='leaderplace'>" + newSorted[i].rank + "." + "</td>" + "<td align='left' class='leaderplayer'>" + 
-			  newSorted[i].name + "</td>" + "<td class='leaderscore'>" + newSorted[i].rating + "</td>" + "<tr/>"; 
-			}
-		} 
-		leaderList = leadertableheading + leaderList + "</table>";
-		//console.log(leaderList); 
-
-		//Old Score Chart
 		var tableheading = "<table id='scoreTable'>" +
    							'<tr>' +
 						      '<th class="place">Place</th>' +
@@ -582,7 +546,17 @@ io.on('connection', function(socket) {
 		  "</td>" + "<td>" + newSorted[i].lastQIndicator + "</td>" + "<tr/>"; 
 		} 
 		scoreList = tableheading + scoreList + "</table>";
-		//console.log(scoreList); 
+		console.log(scoreList); 
+
+		//Node list stuff
+		/*
+		var nodeListTableHeading = "<table id='nodeTable'>";
+		for (var i = 0; i < newSorted.length; i++) { 
+		  nodeList = nodeList + "<tr>" + "<td>" + newSorted[i].lastQIndicator + "</td>" + "<tr/>"; 
+		} 
+		nodeList = nodeListTableHeading + nodeList + "</table>";
+		*/
+
 
 		var winners = [];
 		for (var i = 0; i < clients.length; i++) {
@@ -602,7 +576,7 @@ io.on('connection', function(socket) {
 	socket.on('requestrank', function(winnerList2){
 		var myRank = socket.id.rank;
 		var usersplaying = clients.length;
-socket.emit('publishrank', myRank, nodeList, winnerList2, usersplaying, leaderList, scoreList);
+socket.emit('publishrank', myRank, scoreList, winnerList2, usersplaying);
 	});
 	socket.on('getChart', function(){
 		var group1 = 0; //The number of players who have a score of 0-1
@@ -644,12 +618,6 @@ socket.emit('publishrank', myRank, nodeList, winnerList2, usersplaying, leaderLi
 		var myRightAnswers = socket.id.rightanswers;
 		var myWrongAnswers = socket.id.notanswered + socket.id.wronganswers; 
 		socket.emit('piechart', myRightAnswers, myWrongAnswers);
-	});
-	socket.on('getVideo', function(){
-		io.emit('showingVideo');
-	});
-	socket.on('hideVideo', function(){
-		io.emit('hidingVideo');
 	});
 });
 

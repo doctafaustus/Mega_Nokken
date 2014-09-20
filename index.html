@@ -1,54 +1,76 @@
 <!doctype html>
 <html>
   <head>
-    <title>Mega Quiz</title>
+    <title>MegaNokken</title>
     <link rel="stylesheet" href="jquery.mCustomScrollbar.css" />
     <script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript">
     </script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="jquery.mCustomScrollbar.concat.min.js"></script>
     <style>
+    body {
+      background-color: #2c2b2b;
+    }
     #messageplaceholder{
       display: none;
     }
       #wrapper {
-        border: solid 1px #8f8d8c;
-        width: 750px;
+        padding: 25px;
+        border: solid 0px #8f8d8c;
+        width: 960px;
         margin: 0 auto;
-        background-image:url('greybg.png'); 
+        background-color: #393939;
         overflow: auto;
         overflow-y:hidden;
       }
       #topbar {
-        border: solid 0px purple;
-        background-image: url('topbar.png');
-        background-repeat: repeat-x;
-        height: 63px;
-        margin-bottom: 40px;
+        border: solid 0px black;
+        height: 95px;
+        margin-bottom: 20px;
       }
       #toplefttext {
         float: left;
-        vertical-align: middle;
-        line-height: 55px;
-        padding-left: 15px;
-        font-family: Consolas, monaco, monospace;
-        font-size: 2em;
-        color: white;
-        font-weight: bold;
-        text-shadow: 2px 2px #535151;
       }
       #toprighttext {
         float: right;
         vertical-align: middle;
-        line-height: 55px;
+        line-height: 73px;
         padding-right: 15px;
         font-family: Consolas, monaco, monospace;
-        font-size: 1.3em;
+        font-size: 1.15em;
         color: white;
         text-shadow: 1px 1px #535151;
       }
+      #toprighttext a{
+        color: white;
+      }
+      #mainsection {
+        border: solid 4px #2c2b2b;
+        width: 860px;
+        height: 300px;
+        margin: 0 auto;
+        position: relative;
+      }
+      #questionnumber {
+        margin: 0 auto;
+        text-align: center;
+        color: #cfcfcf;
+        font-family: Arial;
+        font-size: 18px;
+        margin-top: 27px;
+        margin-bottom: 10px;
+      }
+      #qicon {
+        border: solid 0px yellow;
+        height: 40px;
+        width: 40px;
+        float: left;
+        margin-left: 78px;
+        margin-top: 1px;
+      }
       #questiondiv {
-        border: solid 1px #c9caca;
+        border: solid 1px #744bf9;
         font-size: 1.4em;
         font-weight: 600;
         font-family: Consolas, monaco, monospace;
@@ -56,18 +78,61 @@
         margin: 0 auto;
         padding: 7px;
         background: white;
+        margin-left: 124px;
+      }
+      #timergraphic {
+        border: solid 0px green;
+        width: 474px;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 21px;
       }
       #buttons {
-        border: solid 0px yellow;
+        border: solid 0px green;
+        margin: 0 auto;
         text-align: center;
+        margin-top: 15px;
+        margin-bottom: 19px;
       }
+      #bonusa {
+        border: solid 0px yellow;
+        position: absolute;
+        z-index: 10;
+        margin-left: -35px;
+        margin-top: -30px;
+        visibility: hidden;
+      }
+      #bonusb {
+        border: solid 0px yellow;
+        position: absolute;
+        z-index: 10;
+        margin-left: -35px;
+        margin-top: -30px;
+        visibility: hidden;
+      }
+      #bonusc {
+        border: solid 0px yellow;
+        position: absolute;
+        z-index: 10;
+        margin-left: -35px;
+        margin-top: -30px;
+        visibility: hidden;
+      }
+      #bonusd {
+        border: solid 0px yellow;
+        position: absolute;
+        z-index: 10;
+        margin-left: -35px;
+        margin-top: -30px;
+        visibility: hidden;
+      }     
       .answer {
         font-size: 17px;
         color: white;
-        background: #3498db;
+        background: #744bf9;
         border: 0;
         padding: 5px 8px 5px 8px;
-        border-bottom: 3px solid #2a8bcc;
+        border: 1px solid white;
         position: relative;
         vertical-align: top;
         margin: .5em;
@@ -84,7 +149,7 @@
         font-size: 14px;
       }
       #correctanswerdiv{
-        border: solid 1px #c9caca;
+        border: solid 1px #555555;
         font-size: 1em;
         font-family: Consolas, monaco, monospace;
         width: 600px;
@@ -92,10 +157,226 @@
         margin: 0 auto;
         line-height: 0px; /*Not sure why I need this but it works*/
         vertical-align: middle;
-        background: white;
+        background: #333333;
         margin-bottom: 30px;
         padding-left: 5px;
+        clear: both;
       }
+      #statsrow1 {
+        border: solid 0px green;
+        height: 112px;
+        margin-top: 39px;
+      }
+      #playerpanel {
+        border: solid 0px red;
+        height: 100px;
+        width: 200px;
+        float: left;
+        background-image:url('playernamebar.jpg');
+        background-repeat: no-repeat;
+        background-color: #333333;
+      }
+      #playerpanelname {
+        border: solid 0px blue;
+        height: 38px;
+        width: 199px;
+        float: left;
+        color: white;
+        font-family: Arial;
+        font-size: 18px;
+        line-height: 40px;
+        margin-bottom: 1px;
+      }
+      #scorepanel {
+        border: solid 0px yellow;
+        border-right: solid 1px black;
+        height: 56px;
+        width: 98px;
+        float: left;
+        color: lime;
+        font-family: Arial;
+        font-size: 26px;
+        line-height: 36px;
+        text-align: center;
+        padding-top: 4px;
+      }
+      #rankpanel {
+        border: solid 0px lime;
+        height: 56px;
+        width: 98px;    
+        float: right;
+        color: white;
+        font-family: Arial;
+        font-size: 26px;
+        line-height: 36px;
+        text-align: center;
+        padding-top: 4px;
+      }
+      /*Style for pie chart is in-line */
+      #extrastats {
+        border: solid 0px black;
+        height: 100px;
+        width: 290px;
+        float: right;
+        background-image:url('extrastatsbar.jpg');
+        background-repeat: no-repeat;
+        background-color: #333333;
+      }
+      #extrastatstitle {
+        border: solid 0px blue;
+        height: 38px;
+        width: 290px;
+        float: left;
+        color: white;
+        font-family: Arial;
+        font-size: 18px;
+        line-height: 38px;
+        text-align: center;
+        margin-bottom: 1px;
+      }
+      #speedpanel {
+        border: solid 0px yellow;
+        border-right: solid 1px black;
+        height: 56px;
+        width: 95px;
+        float: left;
+        color: white;
+        font-family: Arial;
+        font-size: 26px;
+        line-height: 36px;
+        text-align: center;
+        padding-top: 4px;
+      }
+      #speedtopbox {
+        border: solid 0px red;
+        height: 36px;
+      }
+      #cstreakpanel {
+        border: solid 0px red;
+        border-right: solid 1px black;
+        height: 56px;
+        width: 99px;
+        float: left;
+        color: white;
+        font-family: Arial;
+        font-size: 26px;
+        line-height: 36px;
+        text-align: center;
+        padding-top: 4px;
+      }
+      #hstreakpanel {
+        border: solid 0px green;
+        height: 56px;
+        width: 94px;
+        float: left;
+        color: white;
+        font-family: Arial;
+        font-size: 26px;
+        line-height: 36px;
+        text-align: center;
+        padding-top: 4px;
+      }
+      #statsrow2 {
+        border: solid 0px red;
+        margin-top: 30px;
+      }
+      #grandparent {
+        position: relative;
+      }
+      #nodesdiv {
+        border: solid 0px yellow;
+        width: 238px;
+        float: left;
+        background-image:url('nodebar.jpg');
+        background-repeat: no-repeat;
+        background-color: #333333;
+        color: white;
+        font-family: Arial;
+        font-size: 18px;
+        line-height: 40px;
+        overflow-x: hidden;
+      }      
+      #nodeTable {
+        border: solid 0px red;
+        padding-left: 4px;
+      }
+      #nodeTable img { 
+        display: block; 
+      }   
+      #nodeTable td.tooltip span {
+          display: none;    
+      }
+      #nodeTable td.tooltip:hover span, a.tooltip:focus span {
+          display:block;
+          position:absolute;
+          padding-left: 5px;
+          padding-right: 5px;
+          background-color:#7640ff;
+          color:#fff;
+          font-size: 11px;
+          line-height: 18px;
+          z-index: 15;
+      }
+      #centercolumn {
+        float: left;
+        margin-left: 100px;
+      }
+      #leaderboard {
+        border: solid 0px yellow;
+        background-image:url('leaderboard.jpg');
+        background-repeat: no-repeat;
+        background-color: #333333;
+        width: 173px;
+        color: white;
+        font-family: Arial;
+        font-size: 18px;
+        line-height: 40px;
+      }
+      #leaders {
+        border: solid 0px red;
+        color: #a1a6a4;
+        font-size: 12px;
+        line-height: 8px;
+      }
+      #leaderTable {
+        width: 170px;
+      }
+      #leaderTable td.leaderplace{
+        padding-left: 3px;
+      }
+      #leaderTable td.leaderplayer{
+        padding-left: 1px;
+      }
+      #leaderTable td.leaderscore{
+        padding-left: 5px;
+      }
+      #individualboard {
+        border: solid 0px lime;
+        width: 173px;
+        margin-top: 15px;
+        font-family: Arial;
+        color: lime;
+        font-size: 12px;
+        padding-left: 5px;
+      }
+      .twitter-timeline {
+        margin-left: 91px;
+      }
+      #registration {
+
+      }
+      #videobg {
+        border: solid 1px #555555;
+        background-color: black;
+        height: 300px;
+        width: 620px;
+        display: none;
+        margin: 0 auto;
+      }
+
+
+
+
       #playerstats {
         border-top: solid 1px black;
         border-right: solid 1px black;
@@ -173,8 +454,7 @@
         vertical-align: center;
         text-align: center;
       }
-      table
-      {
+      #scoretable {
           table-layout: fixed;
           width: 100%;
           border: solid 0px black;
@@ -203,6 +483,81 @@
           border-bottom: 1px solid black;
           border-top: 0px solid black;
       }​
+      .notransition {
+        /* For Safari 3.1 to 6.0 */
+        -webkit-transition-property: width;
+        -webkit-transition-duration: 0s;
+        -webkit-transition-timing-function: linear;
+        -webkit-transition-delay: 0s;
+        /* Standard syntax */
+        transition-property: width;
+        transition-duration: 0s;
+        transition-timing-function: linear;
+      }
+      .transition {
+        /* For Safari 3.1 to 6.0 */
+        -webkit-transition-property: width;
+        -webkit-transition-duration: 1s;
+        -webkit-transition-timing-function: linear;
+        -webkit-transition-delay: 0s;
+        /* Standard syntax */
+        transition-property: width;
+        transition-duration: 1s;
+        transition-timing-function: linear;
+      }
+      #bar8 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+
+      }
+      #bar7 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+
+      }
+      #bar6 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+
+      }
+      #bar5 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+
+      }
+      #bar4 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+
+      }
+      #bar3 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+
+      }
+      #bar2 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+
+      }
+      #bar1 {
+        width: 55px;
+        height: 15px;
+        background: #57afff;
+      }
+
+
+
+
+
+
     </style>
   </head>
   <body>
@@ -224,82 +579,198 @@
   <audio id ="applause">
     <source src="applause.wav">
   </audio>
-  Enter your name:
-  <form onSubmit="return submitName();">
-    <input type="text" id="namefield">
-    <input type="submit" value="Set nickname">
-  </form>
+  
+  <div id="registration">
+    Enter your name:
+    <form onSubmit="return master();">
+      <input type="text" id="namefield">
+      <input type="submit" value="Set nickname">
+    </form>
+  </div>
+
+  <div id="hiddenbutton" style="display:none; float:left;">
+    ADMIN PANEL<br/>
+    <input type="button" id="showvideo" value="Show Video" onClick="triggerVideo();"><br />
+    <input type="button" id="hidevideo" value="Hide Video" onClick="triggerHideVideo();"><br />
+    <input type="button" id="chart" value="Q Chart" onClick="triggerChart();"><br />
+    <input type="button" id="E" value="Ranks" onClick="triggerEvent();"><br/>
+    <input type="button" id="a1" value="Set Q1" onClick="setQ('setq1', 'a1');"><br/>
+    <input type="button" id="a2" value="Set Q2" onClick="setQ('setq2', 'a2');"><br/>
+    <input type="button" id="a3" value="Set Q3" onClick="setQ('setq3', 'a3');"><br/>
+    <input type="button" id="a4" value="Set Q4" onClick="setQ('setq4', 'a4');"><br/>
+    <input type="button" id="a5" value="Set Q5" onClick="setQ('setq5', 'a5');"><br/>
+    <input type="button" id="a6" value="Set Q6" onClick="setQ('setq6', 'a6');"><br/>
+    <input type="button" id="a7" value="Set Q7" onClick="setQ('setq7', 'a7');"><br/>
+    <input type="button" id="a8" value="Set Q8" onClick="setQ('setq8', 'a8');"><br/>
+    <input type="button" id="a9" value="Set Q9" onClick="setQ('setq9', 'a9');"><br/>
+    <input type="button" id="a10" value="Set Q10" onClick="setQ('setq10', 'a10');"><br/>
+    <input type="button" id="a11" value="Set Q11" onClick="setQ('setq11', 'a11');"><br/>
+    <input type="button" id="a12" value="Set Q12" onClick="setQ('setq12', 'a12');"><br/>
+    <input type="button" id="a13" value="Set Q13" onClick="setQ('setq13', 'a13');"><br/>
+    <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
+    <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
+  </div>
+
   <div id="wrapper">
     <div id="topbar">
       <div id="toplefttext">
-        MEGA QUIZ
+        <img src="logo.png">
       </div>
       <div id="toprighttext">
+          <a href="#">Home</a>
+          |
+          <a href="#">About</a>
+          |
+          <a href="#">Contact</a>
+      </div>
+    </div>
+
+    <div id="mainsection">
+      <div id="videobg">
+        <div id="video" style="display:none;">
+          <iframe src="http://www.twitch.tv/streamerhouse/embed" frameborder="0" scrolling="no" height="300" width="620"></iframe>
+        </div>
+      </div>
+      <div id="questionnumber">
         Question <span id="thequestionnumber">0</span> of 15
       </div>
-    </div>
-    <div id="hiddenbutton" style="display:none;">
-      ADMIN PANEL<br/>
-      <input type="button" id="E" value="Ranks" onClick="triggerEvent();"><br/>
-      <input type="button" id="a1" value="Set Q1" onClick="setQ('setq1', 'a1');"><br/>
-      <input type="button" id="a2" value="Set Q2" onClick="setQ('setq2', 'a2');"><br/>
-      <input type="button" id="a3" value="Set Q3" onClick="setQ('setq3', 'a3');"><br/>
-      <input type="button" id="a4" value="Set Q4" onClick="setQ('setq4', 'a4');"><br/>
-      <input type="button" id="a5" value="Set Q5" onClick="setQ('setq5', 'a5');"><br/>
-      <input type="button" id="a6" value="Set Q6" onClick="setQ('setq6', 'a6');"><br/>
-      <input type="button" id="a7" value="Set Q7" onClick="setQ('setq7', 'a7');"><br/>
-      <input type="button" id="a8" value="Set Q8" onClick="setQ('setq8', 'a8');"><br/>
-      <input type="button" id="a9" value="Set Q9" onClick="setQ('setq9', 'a9');"><br/>
-      <input type="button" id="a10" value="Set Q10" onClick="setQ('setq10', 'a10');"><br/>
-      <input type="button" id="a11" value="Set Q11" onClick="setQ('setq11', 'a11');"><br/>
-      <input type="button" id="a12" value="Set Q12" onClick="setQ('setq12', 'a12');"><br/>
-      <input type="button" id="a13" value="Set Q13" onClick="setQ('setq13', 'a13');"><br/>
-      <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
-      <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
-    </div>
-    <div id="questiondiv">
-      <span id="header"></span>
-    </div>
-    <div id="buttons">
-      <p>
-        <input type="button" id="A" class="answer" onClick="submitAnswer('A'); playMusic();">
-        <input type="button" id="B" class="answer" onClick="submitAnswer('B'); playMusic();">
-        <input type="button" id="C" class="answer" onClick="submitAnswer('C'); playMusic();">
-        <input type="button" id="D" class="answer" onClick="submitAnswer('D'); playMusic();">
-      </p>
-    </div>
-    <div id="timerdiv">
-      <span id="timer"></span>
-    </div>
-    <br/>
-    <div id="correctanswerdiv">
-      <p id="correctanswerp"></p>
-    </div>
-    <div id="messageplaceholder">Placeholder text</div>
-    <br/>
-    <div id="playerstats">
-      <div id="righttopbar">
-        <span id="playername">Player</span>
+      <div id="qicon">
+        <img src="questionicon.jpg">
       </div>
-      <div id="statdetails1">
-        Score: <span id="myscore" style="color: #d84c13"></span><br/>
-        Streak: <span id="mystreak" style="color: #d84c13"></span><br/>
+      <div id="questiondiv">
+        <span id="header"></span>
       </div>
-      <div id="statdetails2">
-        Rank: <span id="myrank" style="color: #d84c13"></span><br/>
-        High Streak: <span id="mytopstreak" style="color: #d84c13"></span><br/>
+      <!--
+      <div id="timerdiv">
+        <span id="timer"></span>
       </div>
+    -->
+      <div id="timergraphic">
+        <table id="timetable">
+          <td><div id="bar1"></div></td>
+          <td><div id="bar2"></div></td>
+          <td><div id="bar3"></div></td>
+          <td><div id="bar4"></div></td>
+          <td><div id="bar5"></div></td>
+          <td><div id="bar6"></div></td>
+          <td><div id="bar7"></div></td>
+          <td><div id="bar8"></div></td>
+        </table>
+      </div>
+
+      <div id="buttons"><!--inline borders for each div don't cover whole button-->
+        <div id="buttona" style="display: inline; border: solid 0px red;">
+          <input type="button" id="A" class="answer" onClick="submitAnswer('A'); playMusic();">
+          <div id="bonusa" style="display: inline;">
+            <img src="bonus.png">
+          </div>
+        </div>
+        <div id="buttonb" style="display: inline; border: solid 0px red;">
+          <input type="button" id="B" class="answer" onClick="submitAnswer('B'); playMusic();">
+          <div id="bonusb" style="display: inline;">
+            <img src="bonus.png">
+          </div>
+        </div>
+        <div id="buttonc" style="display: inline; border: solid 0px red;">
+          <input type="button" id="C" class="answer" onClick="submitAnswer('C'); playMusic();">
+          <div id="bonusc" style="display: inline;">
+            <img src="bonus.png">
+          </div>        
+        </div>
+        <div id="buttond" style="display: inline; border: solid 0px red;">
+          <input type="button" id="D" class="answer" onClick="submitAnswer('D'); playMusic();">
+          <div id="bonusd" style="display: inline;">
+            <img src="bonus.png">
+          </div>
+        </div>
+      </div>
+      <div id="correctanswerdiv">
+        <p id="correctanswerp"></p>
+      </div>
+      <div id="messageplaceholder"></div>
+    </div>
+
+
+    <div id="statsrow1">
+      <div id="playerpanel">
+        <div id="playerpanelname">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="playername">Player</span></div>
+        <div id="scorepanel">
+          <span id="myscore">0</span>
+          <span style="font-size: 16px; display: block; margin-top: -10px; color: #a1a6a4">Score</span>
+        </div>
+        <div id="rankpanel">
+          <span id="myrank">0</span>
+          <span style="font-size: 16px; display: block; margin-top: -10px; color: #a1a6a4">Rank</span>
+        </div>
+      </div>
+      <div id="container2" style="width:350px; height:100px; border: solid 1px #555555; float: left; margin-left: 57px; background-color: #333333"><img src="initialpiechart.jpg"></div>
+      <div id="extrastats">
+        <div id="extrastatstitle">
+          Stats
+        </div>
+          <div id="speedpanel">
+            <div id="speedtopbox">
+              <span id="myavganswertime">0</span>
+            </div>
+            <div id="bottomlabel">
+              <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">Avg. Speed</span>
+            </div>
+          </div>
+          <div id="cstreakpanel">
+            <span id="mystreak">0</span>
+            <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">Current Streak</span>
+          </div>
+          <div id="hstreakpanel">
+            <span id="mytopstreak">0</span>
+            <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">High Streak</span>
+          </div>
+        </div>
+      </div>
+      <div id="statsrow2">
+        <div id="grandparent">
+          <div id="nodesdiv">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="usersplaying">--</span>&nbsp;Users Playing
+            <span id="rankingp"></span>
+          </div>
+        </div>
+        <div id="centercolumn">
+          <div id="leaderboard">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leaderboard
+            <div id="leaders">
+            </div>
+          </div>
+          <div id="individualboard">
+            <table>
+              <tr>
+                <td id="individualrank"></td>
+                <td id="individualname"></td>
+                <td id="individualscore"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+          <a class="twitter-timeline" href="https://twitter.com/MegaNokken" width="351px"data-widget-id="511354397796737024" height="350px">Tweets by @MegaNokken</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+          </script>
+      </div>
+
+
+
     </div>
     <div id="allplayers">
       <div id="righttopbar">
-        Leaderboard
+        All Players
       </div>
       <div id="playerdetails1">
-        <span id="rankingp"></span>
+        <span id="oldtable"></span>
           </table>
       </div>
     </div>
   </div>
+
+  <div id="container" style="width:500px; height:50px; border: solid 1px blue;"></div>
+ 
+  <div id="node" style="width: 50px; height: 50px; border: solid 3px black"><p id="nodeName">test</p></div>
 
   <script>
       (function($){
@@ -315,200 +786,31 @@
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io();
-    var rankingp = document.getElementById('rankingp');
-    var buttons = document.getElementsByClassName("answer");
-    var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-    //Emit a submitted answer on the buttons
-    function submitAnswer(answer) {
-      socket.emit('submission', document.getElementById(answer).value);
-      document.getElementById(answer).style.color = "yellow";
-      for (var i = 0; i < 4; i++) {
-        buttons[i].disabled=true;
-        if (buttons[i].style.color != "yellow") {
-          buttons[i].style.color = "gray";
-          buttons[i].style.background = "#bce5f9"; //Light blue
-          buttons[i].style.borderColor = "#a2cde2";
-        }
-      }
-    };
+    function connect() {
+      var script = document.createElement('script');
+      script.src = "code.js";
+      document.getElementsByTagName('head')[0].appendChild(script);
+    }
 
-    //Emit a new name for the Name submit button 
     function submitName(nameboard) {
+    setTimeout(function() {
       if (document.getElementById('namefield').value == 'a') {
         document.getElementById('hiddenbutton').style.display = "block";
       }
       socket.emit('newname', document.getElementById('namefield').value);
       document.getElementById('playername').innerHTML = document.getElementById('namefield').value;
-      return false; //Be careful with this | Used so the submit button doesn't refresh
-    };
-
-    document.addEventListener('DOMContentLoaded', function() {
-      socket.on('change_header', function(data) {
-          //document.getElementById('header').innerHTML = data.header;
-          document.getElementById('A').value = data.answerA;
-          document.getElementById('B').value = data.answerB;
-          document.getElementById('C').value = data.answerC;
-          document.getElementById('D').value = data.answerD;
-          document.getElementById('thequestionnumber').innerHTML = data.qNum;
-          startTyping(data.header, 20, 'header');
-          if (!isSafari) {
-            document.getElementById('load').play();
-          }
-      });
-    });
-
-    function setQ(q, id) {
-      socket.emit(q);
-      document.getElementById(id).disabled=true;
+      document.getElementById("nodeName").innerHTML = document.getElementById('namefield').value;
+      //return false; //Be careful with this | Used so the submit button doesn't refresh
+    }, 500);
     }
 
-    socket.on('disablebuttons', function(rightAnswer) {
-      setTimeout(function() {
-        var buttonsUnselected = 0;
-        for (var i = 0; i < 4; i++) {
-          buttons[i].disabled=true;
-          if (buttons[i].style.color != "yellow") {
-            buttons[i].style.color = "gray";
-            buttons[i].style.background = "#bce5f9"; //Light blue
-            buttons[i].style.borderColor = "#a2cde2";
-          }
-          if (buttons[i].style.color != "yellow") {
-            buttonsUnselected++;
-          }
-        }
-        if (buttonsUnselected === 4) {
-          document.getElementById('messageplaceholder').innerHTML = "Answer not placed in time";
-          if (!isSafari) {
-            document.getElementById('notintime').play();
-          }
-          socket.emit('resetstreak');
-        }
-        // Return scores now
-        setTimeout(function() {
-          socket.emit('requestscores', rightAnswer);
-          for (var i = 0; i < buttons.length; i++) {
-            if (buttons[i].value === rightAnswer) {
-              buttons[i].style.background = "#2eff69"; //Bright green
-              buttons[i].style.borderColor = "#20d453";
-              buttons[i].style.color = "black";
-            }
-          }
-          if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
-            setTimeout(function() {
-              if (!isSafari) {
-                document.getElementById('applause').play();
-              }
-            }, 4000);
-          }
-        }, 2000);
-      }, 8000);
-    });
-
-    socket.on('returnscores', function(rightAnswer, myScore, myStreak, tempRank, myHighStreak) {
-      document.getElementById('correctanswerp').innerHTML = document.getElementById('messageplaceholder').innerHTML;
-      if (document.getElementById('correctanswerp').innerHTML.charAt(0) === "C") {
-        document.getElementById('correctanswerp').style.color = "green";
-        if (!isSafari) {
-          document.getElementById('right').play();
-        }
-      } else {
-        document.getElementById('correctanswerp').style.color = "red";
-        if (!isSafari) {
-          document.getElementById('wrong').play();
-        }
-      };
-      document.getElementById('myscore').innerHTML = myScore;
-      document.getElementById('mystreak').innerHTML = myStreak;
-      document.getElementById('myrank').innerHTML = tempRank;
-      document.getElementById('mytopstreak').innerHTML = myHighStreak;
-    });
-
-    socket.on('transferresultmessage', function(resultMessage) {
-        document.getElementById('messageplaceholder').innerHTML = resultMessage;
-    });
-
-    socket.on('settimer', function() {
-      document.getElementById('correctanswerp').innerHTML = "";
-      for (var i = 0; i < 4; i++) {
-        buttons[i].style.color = "white";
-        buttons[i].style.background = "#3498db";
-        buttons[i].style.borderColor = "#2a8bcc";
-        buttons[i].disabled=false;
-      }
-      var count = 8;
-      var counter = setInterval(timer, 1000);
-      function timer() {
-        count = count - 1;
-        if (count == -1) {
-          clearInterval(counter);
-          return;
-        }
-        document.getElementById('timer').innerHTML = count + " seconds left";
-      }
-    });
-</script>
-
-<script>//Typing script
-  var delay=50;
-  var currentChar=1;
-  var destination="[none]";
-  function type()
-  {
-    //if (document.all)
-    {
-      var dest=document.getElementById(destination);
-      if (dest)// && dest.innerHTML)
-      {
-        dest.innerHTML=text.substr(0, currentChar)+"";
-        currentChar++;
-        if (currentChar>text.length)
-        {
-          currentChar=1;
-          "type()";
-        } 
-        else
-        {
-          setTimeout("type()", delay);
-        }
-      }
+    function master() {
+      connect();
+      submitName();
+      document.getElementById('registration').style.display = "none";
+      return false;
     }
-  }
-
-  function startTyping(textParam, delayParam, destinationParam)
-  {
-    text=textParam;
-    delay=delayParam;
-    currentChar=1;
-    destination=destinationParam;
-    type();
-  }
-
-  function playMusic(){
-    if (!isSafari) {
-      document.getElementById('myTune').play();
-    }
-  }
-
-  function triggerEvent(){
-    socket.emit('getRanks');
-  }
-
-  socket.on('ranksready', function(winnerList2) {
-    socket.emit('requestrank', winnerList2);
-  });
-
-  socket.on('publishrank', function(myRank, scoreList, winnerList2){
-    document.getElementById('myrank').innerHTML = myRank;
-    rankingp.innerHTML = scoreList || ""; //Needed for IE otherwise it says "null"
-    // End Game Stuff
-    if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
-      setTimeout(function() {
-        document.getElementById('correctanswerp').innerHTML = winnerList2;
-      }, 3200);
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
 

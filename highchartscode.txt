@@ -1,0 +1,29 @@
+<script>
+  socket.on('questionchart', function(group1, group2, group3, group4, group5) {
+    $(function () { 
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Correct Answers'
+            },
+            xAxis: {
+                categories: ['0-1', '2-3', '4-5', '6-7', '8-10']
+            },
+            yAxis: {
+                title: {
+                    text: 'Players'
+                }
+            },
+            series: [{
+                name: document.getElementById('namefield').value,
+                data: [1, 0, 4, 0, 0]
+            }, {
+                name: "All Players",
+                data: [group1, group2, group3, group4, group5]
+            }]
+        });
+    });
+  });
+</script>
