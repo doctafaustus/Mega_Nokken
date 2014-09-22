@@ -768,7 +768,7 @@
     </div>
   </div>
 
-  <div id="container" style="width:500px; height:50px; border: solid 1px blue;"></div>
+  <div id="container" style="width:500px; height:300px; border: solid 1px blue;"></div>
  
   <div id="node" style="width: 50px; height: 50px; border: solid 3px black"><p id="nodeName">test</p></div>
 
@@ -801,14 +801,29 @@
       document.getElementById('playername').innerHTML = document.getElementById('namefield').value;
       document.getElementById("nodeName").innerHTML = document.getElementById('namefield').value;
       //return false; //Be careful with this | Used so the submit button doesn't refresh
-    }, 500);
+    }, 8000);
     }
 
     function master() {
+      if (document.getElementById('namefield').value.length > 15) {
+        alert('Name must contain 15 characters or less.');
+        return false;
+      }
+      if (document.getElementById('namefield').value.length < 1) {
+        alert('Name must contain 1 or more characters.');
+        return false;
+      }
       connect();
       submitName();
       document.getElementById('registration').style.display = "none";
       return false;
+    }
+
+    function checkNameLength() {
+      if (document.getElementById('namefield').value.length > 15) {
+        alert('Name must contain 15 characters or less.');
+        return false;
+      } 
     }
   </script>
 </body>

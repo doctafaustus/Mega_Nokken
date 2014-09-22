@@ -305,7 +305,8 @@
               enabled: false
             },
             chart: {
-                type: 'column'
+                backgroundColor: '#333333',
+                type: 'column',
             },
             title: {
                 text: ''
@@ -324,7 +325,8 @@
             series: [{
                 name: "All Players",
                 data: [group1, group2, group3, group4, group5]
-            }]
+            }],
+            colors: ['#7640ff']
         });
     });
   });
