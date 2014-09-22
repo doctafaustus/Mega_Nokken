@@ -452,7 +452,7 @@ function listClients(myArray) {
 
 //Constructor function to mocket socket.id into an object w/ props
 function MakeObj(socketid) {
-	this.name = socketid;
+	this.name = "Incoming Player...";
 	this.rating = 0;
 	this.nickname = undefined;
 	this.streak = 0;
@@ -462,7 +462,7 @@ function MakeObj(socketid) {
 	this.rightanswers = 0;
 	this.wronganswers = 0;
 	this.qFaced = this.notanswered + this.rightanswers + this.wronganswers;
-	this.lastQIndicator = "<img src='gray.png'>" + "<span>" + socketid + "</span>";
+	this.lastQIndicator = "<img src='gray.png'>" + "<span>" + this.name + "</span>";
 	this.mySubmitTime = undefined;
 	this.myQuestionPresentTime = undefined;
 	this.myAnswerTime = undefined;
