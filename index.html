@@ -27,7 +27,7 @@
       #topbar {
         border: solid 0px black;
         height: 95px;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
       }
       #toplefttext {
         float: left;
@@ -44,6 +44,19 @@
       }
       #toprighttext a{
         color: white;
+      }
+      #banner {
+        width: 860px;
+        height: 15px;
+        margin: 0 auto;
+        background-color: white;
+        border: solid 4px white;
+        text-align: center;
+        font-size: 12px;
+        font-family: Arial;
+        line-height: 18px;
+        visibility: hidden;
+        font-weight: bold;
       }
       #mainsection {
         border: solid 4px #2c2b2b;
@@ -364,15 +377,17 @@
         margin-left: 91px;
       }
       #registration {
-
+        color: white;
+        font-size: 12px;
+        font-family: Arial;
       }
       #videobg {
         border: solid 1px #555555;
         background-color: black;
         height: 300px;
-        width: 620px;
+        width: 478px;
         display: none;
-        margin: 0 auto;
+        float: left;
       }
 
 
@@ -582,6 +597,7 @@
   </audio>
   
   <div id="registration">
+    <p id="browswer"></p>
     Enter your name:
     <form onSubmit="return master();">
       <input type="text" id="namefield">
@@ -625,13 +641,16 @@
           <a href="#">Contact</a>
       </div>
     </div>
-
+    <div id="banner">
+      
+    </div>
     <div id="mainsection">
       <div id="videobg">
         <div id="video" style="display:none;">
-          <iframe src="http://www.twitch.tv/streamerhouse/embed" frameborder="0" scrolling="no" height="300" width="620"></iframe>
+          <iframe src="http://www.twitch.tv/streamerhouse/embed" frameborder="0" scrolling="no" height="300" width="478"></iframe>
         </div>
       </div>
+      <div id="container" style="width:378px; height:298px; border: solid 1px #555555; float:right; display:none;"></div>
       <div id="questionnumber">
         Question <span id="thequestionnumber">0</span> of 15
       </div>
@@ -754,24 +773,23 @@
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
           </script>
       </div>
-
-
-
     </div>
+
+    <!--
     <div id="allplayers">
       <div id="righttopbar">
         All Players
       </div>
+      
       <div id="playerdetails1">
         <span id="oldtable"></span>
           </table>
       </div>
     </div>
+     -->
   </div>
 
-  <div id="container" style="width:500px; height:300px; border: solid 1px blue;"></div>
  
-  <div id="node" style="width: 50px; height: 50px; border: solid 3px black"><p id="nodeName">test</p></div>
 
   <script>
       (function($){
@@ -795,9 +813,6 @@
 
     function submitName(nameboard) {
     setTimeout(function() {
-      if (document.getElementById('namefield').value == 'a') {
-        document.getElementById('hiddenbutton').style.display = "block";
-      }
       socket.emit('newname', document.getElementById('namefield').value);
       document.getElementById('playername').innerHTML = document.getElementById('namefield').value;
       document.getElementById("nodeName").innerHTML = document.getElementById('namefield').value;
@@ -825,6 +840,19 @@
         alert('Name must contain 15 characters or less.');
         return false;
       } 
+    }
+
+    var N= navigator.appName, ua= navigator.userAgent, tem;
+    var M= ua.match(/(opera|chrome|safari|firefox|msie|trident)\/?\s*(\.?\d+(\.\d+)*)/i);
+    if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) {M[2]=tem[1];}
+    M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
+    document.getElementById('browswer').innerHTML = M;
+    M = String(M);
+    if ((M.substring(0,6) == "Chrome") || (M.substring(0,7) == "Firefox" && M.substring(8,10) >= 10) || (M.substring(0,6) == "Safari" && M.substring(7,9) >= 5) || (M.substring(0,4) == "MSIE" && M.substring(5,7) >= 10)) {
+
+    } else {
+      document.getElementById('registration').style.visibility = "hidden";
+      alert('Browser not supported.'); //Enter a message somewhere
     }
   </script>
 </body>

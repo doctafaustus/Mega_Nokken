@@ -38,6 +38,7 @@ io.on('connection', function(socket) {
 	socket.on('newname', function(nameboard) {
 		socket.id.name = nameboard;
 		if (socket.id.name === "a") {
+			socket.emit('adminRegistered');
 			var adminPosition = clients.indexOf(socket.id);
 			if (adminPosition > -1) {
 				clients.splice(adminPosition, 1);
@@ -527,7 +528,7 @@ io.on('connection', function(socket) {
 			console.log("Rank for " + clients[r].name + " is: " + clients[r].rank);
 		}
 		//End of Rank code
-		scoreList = ""; //Make the list of players and their scores 
+		//scoreList = ""; //Make the list of players and their scores 
 		nodeList = ""; //Make the list of players and their scores 
 		leaderList = "";
 
@@ -567,6 +568,7 @@ io.on('connection', function(socket) {
 		leaderList = leadertableheading + leaderList + "</table>";
 		//console.log(leaderList); 
 
+		/*
 		//Old Score Chart
 		var tableheading = "<table id='scoreTable'>" +
    							'<tr>' +
@@ -582,7 +584,8 @@ io.on('connection', function(socket) {
 		  "</td>" + "<td>" + newSorted[i].lastQIndicator + "</td>" + "<tr/>"; 
 		} 
 		scoreList = tableheading + scoreList + "</table>";
-		//console.log(scoreList); 
+		//console.log(scoreList);
+		*/
 
 		var winners = [];
 		for (var i = 0; i < clients.length; i++) {

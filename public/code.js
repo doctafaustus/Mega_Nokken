@@ -26,6 +26,10 @@
       }
     };
 
+    socket.on('adminRegistered', function() {
+      document.getElementById('hiddenbutton').style.display = "block";
+    });
+
     //Emit a new name for the Name submit button 
 
 
@@ -41,7 +45,6 @@
           if (!isSafari) {
             document.getElementById('load').play();
           }
-          document.getElementById("node").style.borderColor = "black";
 
           //Reload Timer Bar
           
@@ -140,19 +143,8 @@
         if (!isSafari) {
           document.getElementById('right').play();
         }
-
-        //Nodes
-        document.getElementById("node").style.borderColor = "#20d453"; //Green
-
-
       } else {
         document.getElementById('correctanswerp').style.color = "red";
-
-
-        //Nodes
-        document.getElementById("node").style.borderColor = "red";
-
-
         if (!isSafari) {
           document.getElementById('wrong').play();
         }
@@ -287,7 +279,7 @@
     document.getElementById('myrank').innerHTML = myRank;
     document.getElementById('usersplaying').innerHTML = usersplaying;
     rankingp.innerHTML = nodeList || ""; //Needed for IE otherwise it says "null"
-    document.getElementById('oldtable').innerHTML = scoreList || ""; //Needed for IE otherwise it says "null"
+    //document.getElementById('oldtable').innerHTML = scoreList || ""; //Needed for IE otherwise it says "null"
     document.getElementById('leaders').innerHTML = leaderList || ""; //Needed for IE otherwise it says "null"
 
     // End Game Stuff
@@ -313,20 +305,39 @@
             },
             xAxis: {
                 title: {
-                  text: 'Correct Answers'
+                  text: 'Correct Answers',
+                  style: {
+                    color: 'white'
+                  }
                 },
-                categories: ['0-1', '2-3', '4-5', '6-7', '8-10']
+                categories: ['0-1', '2-3', '4-5', '6-7', '8-10'],
+                labels: {
+                  style: {
+                    color: 'white',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                  }
+                },
             },
             yAxis: {
+                labels: {
+                  style: {
+                    color: 'white',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                  }
+                },
                 title: {
-                    text: 'Players'
+                  style: {
+                    color: 'white'
+                  },
+                  text: 'Players',
                 }
             },
             series: [{
                 name: "All Players",
-                data: [group1, group2, group3, group4, group5]
+                data: [group1, group2, group3, group4, group5],
+                showInLegend: false,
             }],
-            colors: ['#7640ff']
+            colors: ['#7640ff'],
         });
     });
   });
@@ -412,6 +423,7 @@
 
 socket.on('showingVideo', function() {
   $("#videobg").show(1200);
+  $("#container").show(1200);
   $("#questionnumber").hide(1200);
   $("#qicon").hide(1200);
   $("#questiondiv").hide(1200);
@@ -420,10 +432,13 @@ socket.on('showingVideo', function() {
   $("#correctanswerdiv").hide(1200);
   $("#messageplaceholder").hide(1200);
   document.getElementById('video').style.display = "block";
+  document.getElementById('banner').style.visibility = "visible";
+  document.getElementById('banner').innerHTML = "Intermission";
 });
 
 socket.on('hidingVideo', function() {
-  $("#videobg").hide(1200);
+  $("#videobg").hide();
+  $("#container").hide();
   $("#questionnumber").show(1200);
   $("#qicon").show(1200);
   $("#questiondiv").show(1200);
@@ -433,6 +448,7 @@ socket.on('hidingVideo', function() {
   $("#messageplaceholder").show(1200);
   document.getElementById('messageplaceholder').style.display = "none";
   document.getElementById('video').style.display = "none";
+  document.getElementById('banner').style.visibility = "hidden";
   //Be aware that the sound is still on at this point
 });
 
