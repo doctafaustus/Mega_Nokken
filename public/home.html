@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <title>MegaNokken</title>
+    <link rel="stylesheet" href="jquery.mCustomScrollbar.css" />
+    <script src="http://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript">
+    </script>
+    <style>
+    body {
+      background-image:url('bg.jpg');
+      background-repeat: repeat;
+      margin: 0;
+    }
+    #messageplaceholder{
+      display: none;
+    }
+    #wrapper {
+      padding: 25px;
+      border: solid 0px #555555;
+      width: 960px;
+      margin: 0 auto;
+      /*background-color: #393939;*/
+      overflow: auto;
+      overflow-y:hidden;
+    }
+    #topbar {
+      border: solid 0px black;
+      height: 95px;
+      margin-bottom: 0px;
+    }
+    #toplefttext {
+      float: left;
+    }
+    #toprighttext {
+      float: right;
+      vertical-align: middle;
+      line-height: 73px;
+      padding-right: 15px;
+      font-family: Arial;
+      font-size: 14px;
+      color: white;
+      text-shadow: 1px 1px #535151;
+    }
+    #toprighttext a{
+      color: white;
+    }
+    #center {
+      text-align: center;
+      margin: 0 auto;
+      margin-bottom: 10px;
+    }
+    #centermiddle {
+      font-family: "open sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+      text-transform: uppercase;
+      line-height: 105%;
+      letter-spacing: 1px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
+      color: white;
+      font-size: 44px;
+    }
+    #clock {
+      font-family: "open sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+      line-height: 105%;
+      letter-spacing: 1px;
+      font-weight: bold;
+      color: white;
+      font-size: 34px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+  </head>
+  <body>
+  <div id="wrapper">
+    <div id="topbar">
+      <div id="toplefttext">
+        <img src="logo.png">
+      </div>
+      <div id="toprighttext">
+          <a href="#">Home</a>
+          |
+          <a href="#">About</a>
+          |
+          <a href="#">Contact</a>
+      </div>
+    </div>
+    <div id="center">
+      <img src="slider.jpg">
+    </div>
+    <br/>
+    <div id="centermiddle">
+      Live Trivia Colosseum
+    </div>
+    <br/><br/><br/>
+    
+    <div id="clock">
+      <span id="countdowntext">GAME BEGINS IN:  </span><br/>
+      <span id="countdown">&nbsp;</span>
+    </div>
+    <div id="registration">
+      <p id="browswer"></p>
+      Enter your name:
+      <form onSubmit="return master();">
+        <input type="text" id="namefield">
+        <input type="submit" value="Set nickname">
+      </form>
+   </div>
+  </div>
+
+
+
+<script>
+  var target_date = new Date("Oct 3, 2014 9:31:00").getTime();
+  var days, hours, minutes, seconds;
+  var countdown = document.getElementById("countdown");
+
+  var clock = setInterval(function () {
+    var current_date = new Date().getTime();
+    var seconds_left = (target_date - current_date) / 1000;
+
+    days = parseInt(seconds_left / 86400);
+    seconds_left = seconds_left % 86400;
+     
+    hours = parseInt(seconds_left / 3600);
+    seconds_left = seconds_left % 3600;
+      
+    minutes = parseInt(seconds_left / 60);
+    seconds = parseInt(seconds_left % 60);
+
+    countdown.innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s";
+
+    if (days <=0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+      clearInterval(clock);
+      countdown.innerHTML = "MegaNokken Begins!";
+    }
+  }, 1000);
+</script>
+</body>
+</html>
+

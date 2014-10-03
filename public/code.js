@@ -125,12 +125,12 @@
             }
           }
           triggerPieChart();
-          if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
+          if (document.getElementById('thequestionnumber').innerHTML.substring(0,3) == "30") {
             setTimeout(function() {
               if (!isSafari) {
                 document.getElementById('applause').play();
               }
-            }, 4000);
+            }, 3000);
           }
         }, 3000);
       }, 9000);
@@ -259,6 +259,14 @@
     socket.emit('getChart');
   }
 
+  function triggerChart2(){
+    socket.emit('getChart2');
+  }
+
+    function triggerChart3(){
+    socket.emit('getChart3');
+  }
+
   function triggerPieChart() {
     socket.emit('getPieChart');
   }
@@ -269,6 +277,10 @@
 
   function triggerHideVideo() {
     socket.emit('hideVideo');
+  }
+
+  function triggerfinalVideo() {
+    socket.emit('finalVideo');
   }
 
   socket.on('ranksready', function(winnerList2) {
@@ -283,7 +295,7 @@
     document.getElementById('leaders').innerHTML = leaderList || ""; //Needed for IE otherwise it says "null"
 
     // End Game Stuff
-    if (document.getElementById('thequestionnumber').innerHTML.charAt(1) === "5") {
+    if (document.getElementById('thequestionnumber').innerHTML.substring(0,3) == "30") {
       setTimeout(function() {
         document.getElementById('correctanswerp').innerHTML = winnerList2;
       }, 3200);
@@ -311,6 +323,110 @@
                   }
                 },
                 categories: ['0-1', '2-3', '4-5', '6-7', '8-10'],
+                labels: {
+                  style: {
+                    color: 'white',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                  }
+                },
+            },
+            yAxis: {
+                labels: {
+                  style: {
+                    color: 'white',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                  }
+                },
+                title: {
+                  style: {
+                    color: 'white'
+                  },
+                  text: 'Players',
+                }
+            },
+            series: [{
+                name: "All Players",
+                data: [group1, group2, group3, group4, group5],
+                showInLegend: false,
+            }],
+            colors: ['#7640ff'],
+        });
+    });
+  });
+
+  socket.on('questionchart2', function(group1, group2, group3, group4, group5) {
+    $(function () { 
+        $('#container').highcharts({
+            credits: {
+              enabled: false
+            },
+            chart: {
+                backgroundColor: '#333333',
+                type: 'column',
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                title: {
+                  text: 'Correct Answers',
+                  style: {
+                    color: 'white'
+                  }
+                },
+                categories: ['0-4', '5-8', '9-12', '13-16', '17-20'],
+                labels: {
+                  style: {
+                    color: 'white',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                  }
+                },
+            },
+            yAxis: {
+                labels: {
+                  style: {
+                    color: 'white',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                  }
+                },
+                title: {
+                  style: {
+                    color: 'white'
+                  },
+                  text: 'Players',
+                }
+            },
+            series: [{
+                name: "All Players",
+                data: [group1, group2, group3, group4, group5],
+                showInLegend: false,
+            }],
+            colors: ['#7640ff'],
+        });
+    });
+  });
+
+  socket.on('questionchart3', function(group1, group2, group3, group4, group5) {
+    $(function () { 
+        $('#container').highcharts({
+            credits: {
+              enabled: false
+            },
+            chart: {
+                backgroundColor: '#333333',
+                type: 'column',
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                title: {
+                  text: 'Correct Answers',
+                  style: {
+                    color: 'white'
+                  }
+                },
+                categories: ['0-6', '7-12', '13-18', '19-24', '25-30'],
                 labels: {
                   style: {
                     color: 'white',
@@ -451,6 +567,22 @@ socket.on('hidingVideo', function() {
   document.getElementById('banner').style.visibility = "hidden";
   //Be aware that the sound is still on at this point
 });
+
+socket.on('endVideo', function() {
+  $("#videobg").show(1200);
+  $("#container").show(1200);
+  $("#questionnumber").hide(1200);
+  $("#qicon").hide(1200);
+  $("#questiondiv").hide(1200);
+  $("#timergraphic").hide(1200);
+  $("#buttons").hide(1200);
+  $("#correctanswerdiv").hide(1200);
+  $("#messageplaceholder").hide(1200);
+  document.getElementById('video').style.display = "block";
+  document.getElementById('banner').style.visibility = "visible";
+  document.getElementById('banner').innerHTML = "Game Completed!";
+});
+
 
 //Timer Script
   function removeBar8() {

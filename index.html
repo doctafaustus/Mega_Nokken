@@ -10,566 +10,571 @@
     <script src="jquery.mCustomScrollbar.concat.min.js"></script>
     <style>
     body {
-      background-color: #2c2b2b;
+      background-image:url('bg.jpg');
+      background-repeat: repeat;
+      margin: 0;
     }
     #messageplaceholder{
       display: none;
     }
-      #wrapper {
-        padding: 25px;
-        border: solid 0px #8f8d8c;
-        width: 960px;
-        margin: 0 auto;
-        background-color: #393939;
-        overflow: auto;
-        overflow-y:hidden;
-      }
-      #topbar {
-        border: solid 0px black;
-        height: 95px;
-        margin-bottom: 0px;
-      }
-      #toplefttext {
-        float: left;
-      }
-      #toprighttext {
-        float: right;
-        vertical-align: middle;
-        line-height: 73px;
-        padding-right: 15px;
-        font-family: Consolas, monaco, monospace;
-        font-size: 1.15em;
-        color: white;
-        text-shadow: 1px 1px #535151;
-      }
-      #toprighttext a{
-        color: white;
-      }
-      #banner {
-        width: 860px;
-        height: 15px;
-        margin: 0 auto;
-        background-color: white;
-        border: solid 4px white;
-        text-align: center;
-        font-size: 12px;
-        font-family: Arial;
+    #wrapper {
+      padding: 25px;
+      border: solid 0px #555555;
+      width: 960px;
+      margin: 0 auto;
+      background-color: #393939;
+      overflow: auto;
+      overflow-y:hidden;
+    }
+    #topbar {
+      border: solid 0px black;
+      height: 95px;
+      margin-bottom: 0px;
+    }
+    #toplefttext {
+      float: left;
+    }
+    #toprighttext {
+      float: right;
+      vertical-align: middle;
+      line-height: 73px;
+      padding-right: 15px;
+      font-family: Consolas, monaco, monospace;
+      font-size: 1.15em;
+      color: white;
+      text-shadow: 1px 1px #535151;
+    }
+    #toprighttext a{
+      color: white;
+    }
+    #banner {
+      width: 860px;
+      height: 15px;
+      margin: 0 auto;
+      background-color: white;
+      border: solid 4px white;
+      text-align: center;
+      font-size: 12px;
+      font-family: Arial;
+      line-height: 18px;
+      visibility: hidden;
+      font-weight: bold;
+    }
+    #mainsection {
+      border: solid 4px #2c2b2b;
+      width: 860px;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+    #questionnumber {
+      margin: 0 auto;
+      text-align: center;
+      color: #cfcfcf;
+      font-family: Arial;
+      font-size: 18px;
+      margin-top: 27px;
+      margin-bottom: 10px;
+    }
+    #qicon {
+      border: solid 0px yellow;
+      height: 40px;
+      width: 40px;
+      float: left;
+      margin-left: 78px;
+      margin-top: 1px;
+    }
+    #questiondiv {
+      border: solid 1px #744bf9;
+      font-size: 1.3em;
+      font-weight: 600;
+      font-family: Consolas, monaco, monospace;
+      width: 600px;
+      margin: 0 auto;
+      padding: 7px;
+      background: white;
+      margin-left: 124px;
+    }
+    #timergraphic {
+      border: solid 0px green;
+      width: 474px;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 21px;
+    }
+    #buttons {
+      border: solid 0px green;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 19px;
+    }
+    #bonusa {
+      border: solid 0px yellow;
+      position: absolute;
+      z-index: 10;
+      margin-left: -35px;
+      margin-top: -30px;
+      visibility: hidden;
+    }
+    #bonusb {
+      border: solid 0px yellow;
+      position: absolute;
+      z-index: 10;
+      margin-left: -35px;
+      margin-top: -30px;
+      visibility: hidden;
+    }
+    #bonusc {
+      border: solid 0px yellow;
+      position: absolute;
+      z-index: 10;
+      margin-left: -35px;
+      margin-top: -30px;
+      visibility: hidden;
+    }
+    #bonusd {
+      border: solid 0px yellow;
+      position: absolute;
+      z-index: 10;
+      margin-left: -35px;
+      margin-top: -30px;
+      visibility: hidden;
+    }     
+    .answer {
+      font-size: 17px;
+      color: white;
+      background: #744bf9;
+      border: 0;
+      padding: 5px 8px 5px 8px;
+      border: 1px solid white;
+      position: relative;
+      vertical-align: top;
+      margin: .5em;
+      -webkit-appearance: none;
+    }
+    .answer:active {
+      top: 1px;
+    }
+    #timerdiv {
+      border: solid 0px orange;
+      width: 95px;
+      margin: 0 auto;
+      height: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+    #correctanswerdiv{
+      border: solid 1px #555555;
+      font-size: 1em;
+      font-family: Consolas, monaco, monospace;
+      width: 600px;
+      height: 30px;
+      margin: 0 auto;
+      line-height: 0px; /*Not sure why I need this but it works*/
+      vertical-align: middle;
+      background: #333333;
+      margin-bottom: 30px;
+      padding-left: 5px;
+      clear: both;
+    }
+    #statsrow1 {
+      border: solid 0px green;
+      height: 112px;
+      margin-top: 39px;
+    }
+    #playerpanel {
+      border: solid 0px red;
+      height: 100px;
+      width: 200px;
+      float: left;
+      background-image:url('playernamebar.jpg');
+      background-repeat: no-repeat;
+      background-color: #333333;
+    }
+    #playerpanelname {
+      border: solid 0px blue;
+      height: 38px;
+      width: 199px;
+      float: left;
+      color: white;
+      font-family: Arial;
+      font-size: 18px;
+      line-height: 40px;
+      margin-bottom: 1px;
+    }
+    #scorepanel {
+      border: solid 0px yellow;
+      border-right: solid 1px black;
+      height: 56px;
+      width: 98px;
+      float: left;
+      color: lime;
+      font-family: Arial;
+      font-size: 26px;
+      line-height: 36px;
+      text-align: center;
+      padding-top: 4px;
+    }
+    #rankpanel {
+      border: solid 0px lime;
+      height: 56px;
+      width: 98px;    
+      float: right;
+      color: white;
+      font-family: Arial;
+      font-size: 26px;
+      line-height: 36px;
+      text-align: center;
+      padding-top: 4px;
+    }
+    /*Style for pie chart is in-line */
+    #extrastats {
+      border: solid 0px black;
+      height: 100px;
+      width: 290px;
+      float: right;
+      background-image:url('extrastatsbar.jpg');
+      background-repeat: no-repeat;
+      background-color: #333333;
+    }
+    #extrastatstitle {
+      border: solid 0px blue;
+      height: 38px;
+      width: 290px;
+      float: left;
+      color: white;
+      font-family: Arial;
+      font-size: 18px;
+      line-height: 38px;
+      text-align: center;
+      margin-bottom: 1px;
+    }
+    #speedpanel {
+      border: solid 0px yellow;
+      border-right: solid 1px black;
+      height: 56px;
+      width: 95px;
+      float: left;
+      color: white;
+      font-family: Arial;
+      font-size: 26px;
+      line-height: 36px;
+      text-align: center;
+      padding-top: 4px;
+    }
+    #speedtopbox {
+      border: solid 0px red;
+      height: 36px;
+    }
+    #cstreakpanel {
+      border: solid 0px red;
+      border-right: solid 1px black;
+      height: 56px;
+      width: 99px;
+      float: left;
+      color: white;
+      font-family: Arial;
+      font-size: 26px;
+      line-height: 36px;
+      text-align: center;
+      padding-top: 4px;
+    }
+    #hstreakpanel {
+      border: solid 0px green;
+      height: 56px;
+      width: 94px;
+      float: left;
+      color: white;
+      font-family: Arial;
+      font-size: 26px;
+      line-height: 36px;
+      text-align: center;
+      padding-top: 4px;
+    }
+    #statsrow2 {
+      border: solid 0px red;
+      margin-top: 30px;
+    }
+    #grandparent {
+      position: relative;
+    }
+    #nodesdiv {
+      border: solid 0px yellow;
+      width: 238px;
+      float: left;
+      background-image:url('nodebar.jpg');
+      background-repeat: no-repeat;
+      background-color: #333333;
+      color: white;
+      font-family: Arial;
+      font-size: 18px;
+      line-height: 40px;
+      overflow-x: hidden;
+    }      
+    #nodeTable {
+      border: solid 0px red;
+      padding-left: 4px;
+    }
+    #nodeTable img { 
+      display: block; 
+    }   
+    #nodeTable td.tooltip span {
+        display: none;    
+    }
+    #nodeTable td.tooltip:hover span, a.tooltip:focus span {
+        display:block;
+        position:absolute;
+        padding-left: 5px;
+        padding-right: 5px;
+        background-color:#7640ff;
+        color:#fff;
+        font-size: 11px;
         line-height: 18px;
-        visibility: hidden;
-        font-weight: bold;
-      }
-      #mainsection {
-        border: solid 4px #2c2b2b;
-        width: 860px;
-        height: 300px;
-        margin: 0 auto;
-        position: relative;
-      }
-      #questionnumber {
-        margin: 0 auto;
-        text-align: center;
-        color: #cfcfcf;
-        font-family: Arial;
-        font-size: 18px;
-        margin-top: 27px;
-        margin-bottom: 10px;
-      }
-      #qicon {
-        border: solid 0px yellow;
-        height: 40px;
-        width: 40px;
-        float: left;
-        margin-left: 78px;
-        margin-top: 1px;
-      }
-      #questiondiv {
-        border: solid 1px #744bf9;
-        font-size: 1.4em;
-        font-weight: 600;
-        font-family: Consolas, monaco, monospace;
-        width: 600px;
-        margin: 0 auto;
-        padding: 7px;
-        background: white;
-        margin-left: 124px;
-      }
-      #timergraphic {
-        border: solid 0px green;
-        width: 474px;
-        margin: 0 auto;
-        text-align: center;
-        margin-top: 21px;
-      }
-      #buttons {
-        border: solid 0px green;
-        margin: 0 auto;
-        text-align: center;
-        margin-top: 15px;
-        margin-bottom: 19px;
-      }
-      #bonusa {
-        border: solid 0px yellow;
-        position: absolute;
-        z-index: 10;
-        margin-left: -35px;
-        margin-top: -30px;
-        visibility: hidden;
-      }
-      #bonusb {
-        border: solid 0px yellow;
-        position: absolute;
-        z-index: 10;
-        margin-left: -35px;
-        margin-top: -30px;
-        visibility: hidden;
-      }
-      #bonusc {
-        border: solid 0px yellow;
-        position: absolute;
-        z-index: 10;
-        margin-left: -35px;
-        margin-top: -30px;
-        visibility: hidden;
-      }
-      #bonusd {
-        border: solid 0px yellow;
-        position: absolute;
-        z-index: 10;
-        margin-left: -35px;
-        margin-top: -30px;
-        visibility: hidden;
-      }     
-      .answer {
-        font-size: 17px;
-        color: white;
-        background: #744bf9;
-        border: 0;
-        padding: 5px 8px 5px 8px;
-        border: 1px solid white;
-        position: relative;
-        vertical-align: top;
-        margin: .5em;
-        -webkit-appearance: none;
-      }
-      .answer:active {
-        top: 1px;
-      }
-      #timerdiv {
-        border: solid 0px orange;
-        width: 95px;
-        margin: 0 auto;
-        height: 20px;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 14px;
-      }
-      #correctanswerdiv{
-        border: solid 1px #555555;
-        font-size: 1em;
-        font-family: Consolas, monaco, monospace;
-        width: 600px;
-        height: 30px;
-        margin: 0 auto;
-        line-height: 0px; /*Not sure why I need this but it works*/
-        vertical-align: middle;
-        background: #333333;
-        margin-bottom: 30px;
-        padding-left: 5px;
-        clear: both;
-      }
-      #statsrow1 {
-        border: solid 0px green;
-        height: 112px;
-        margin-top: 39px;
-      }
-      #playerpanel {
-        border: solid 0px red;
-        height: 100px;
-        width: 200px;
-        float: left;
-        background-image:url('playernamebar.jpg');
-        background-repeat: no-repeat;
-        background-color: #333333;
-      }
-      #playerpanelname {
-        border: solid 0px blue;
-        height: 38px;
-        width: 199px;
-        float: left;
-        color: white;
-        font-family: Arial;
-        font-size: 18px;
-        line-height: 40px;
-        margin-bottom: 1px;
-      }
-      #scorepanel {
-        border: solid 0px yellow;
-        border-right: solid 1px black;
-        height: 56px;
-        width: 98px;
-        float: left;
-        color: lime;
-        font-family: Arial;
-        font-size: 26px;
-        line-height: 36px;
-        text-align: center;
-        padding-top: 4px;
-      }
-      #rankpanel {
-        border: solid 0px lime;
-        height: 56px;
-        width: 98px;    
-        float: right;
-        color: white;
-        font-family: Arial;
-        font-size: 26px;
-        line-height: 36px;
-        text-align: center;
-        padding-top: 4px;
-      }
-      /*Style for pie chart is in-line */
-      #extrastats {
+        z-index: 15;
+    }
+    #centercolumn {
+      float: left;
+      margin-left: 100px;
+    }
+    #leaderboard {
+      border: solid 0px yellow;
+      background-image:url('leaderboard.jpg');
+      background-repeat: no-repeat;
+      background-color: #333333;
+      width: 173px;
+      color: white;
+      font-family: Arial;
+      font-size: 18px;
+      line-height: 40px;
+    }
+    #leaders {
+      border: solid 0px red;
+      color: #a1a6a4;
+      font-size: 12px;
+      line-height: 8px;
+    }
+    #leaderTable {
+      width: 170px;
+    }
+    #leaderTable td.leaderplace{
+      padding-left: 3px;
+    }
+    #leaderTable td.leaderplayer{
+      padding-left: 1px;
+    }
+    #leaderTable td.leaderscore{
+      padding-left: 5px;
+    }
+    #individualboard {
+      border: solid 0px lime;
+      width: 173px;
+      margin-top: 15px;
+      font-family: Arial;
+      color: lime;
+      font-size: 12px;
+      padding-left: 5px;
+    }
+    .twitter-timeline {
+      margin-left: 91px;
+    }
+    #registration {
+      color: white;
+      font-size: 12px;
+      font-family: Arial;
+    }
+    #videobg {
+      border: solid 1px #555555;
+      background-color: black;
+      height: 300px;
+      width: 478px;
+      display: none;
+      float: left;
+    }
+
+
+
+
+    #playerstats {
+      border-top: solid 1px black;
+      border-right: solid 1px black;
+      float: left;
+      width: 374px;
+      height: 148px;
+      background-image:url('hoffman.png'); 
+    }
+    #righttopbar {
+      background-image:url('bottomtopbar.png');
+      background-repeat: repeat-x; 
+      border: solid 0px red;
+      font-family: Verdana;
+      font-size: 1em;
+      color: white;
+      text-shadow: 1px 1px #535151;
+      text-align: center;
+      line-height: 27px;
+      vertical-align: center;
+      height: 32px;
+    }
+    #statdetails1 {
+      float: left;
+      border: solid 0px green;
+      width: 130px;
+      margin-top: 21px;
+      padding-left: 40px;
+      font-family: Verdana;
+      font-size: 18px;
+      line-height: 190%;
+      color: black;
+    }
+    #statdetails2 {
+      float: right;
+      border: solid 0px red;
+      width: 145px;
+      margin-top: 21px;
+      margin-right: 45px;
+      font-family: Verdana;
+      font-size: 18px;
+      line-height: 190%;
+      color: black;
+    }
+    #allplayers {
+      border-top: solid 1px black;
+      float: right;
+      width: 375px;
+      height: 148px;
+      background-image:url('hoffman.png'); 
+    }
+    #lefttopbar {
+      background-image:url('bottomtopbar.png');
+      background-repeat: repeat-x; 
+      border: solid 0px red;
+      font-family: Verdana;
+      font-size: 1em;
+      color: white;
+      text-shadow: 1px 1px #535151;
+      text-align: center;
+      line-height: 27px;
+      vertical-align: center;
+      height: 32px;
+    }
+    #playerdetails1 {
+      border: solid 0px blue;
+      height: 118px;
+      margin-top: -3px;
+      overflow: auto;
+      overflow-x: hidden;
+      font-family: Verdana;
+      font-size: 10px;
+      padding-top: -10px;
+      width: 300px;
+      margin: 0 auto;
+      vertical-align: center;
+      text-align: center;
+    }
+    #scoretable {
+        table-layout: fixed;
+        width: 100%;
         border: solid 0px black;
-        height: 100px;
-        width: 290px;
-        float: right;
-        background-image:url('extrastatsbar.jpg');
-        background-repeat: no-repeat;
-        background-color: #333333;
-      }
-      #extrastatstitle {
-        border: solid 0px blue;
-        height: 38px;
-        width: 290px;
-        float: left;
-        color: white;
-        font-family: Arial;
-        font-size: 18px;
-        line-height: 38px;
-        text-align: center;
-        margin-bottom: 1px;
-      }
-      #speedpanel {
-        border: solid 0px yellow;
-        border-right: solid 1px black;
-        height: 56px;
-        width: 95px;
-        float: left;
-        color: white;
-        font-family: Arial;
-        font-size: 26px;
-        line-height: 36px;
-        text-align: center;
-        padding-top: 4px;
-      }
-      #speedtopbox {
-        border: solid 0px red;
-        height: 36px;
-      }
-      #cstreakpanel {
-        border: solid 0px red;
-        border-right: solid 1px black;
-        height: 56px;
-        width: 99px;
-        float: left;
-        color: white;
-        font-family: Arial;
-        font-size: 26px;
-        line-height: 36px;
-        text-align: center;
-        padding-top: 4px;
-      }
-      #hstreakpanel {
-        border: solid 0px green;
-        height: 56px;
-        width: 94px;
-        float: left;
-        color: white;
-        font-family: Arial;
-        font-size: 26px;
-        line-height: 36px;
-        text-align: center;
-        padding-top: 4px;
-      }
-      #statsrow2 {
-        border: solid 0px red;
-        margin-top: 30px;
-      }
-      #grandparent {
-        position: relative;
-      }
-      #nodesdiv {
-        border: solid 0px yellow;
-        width: 238px;
-        float: left;
-        background-image:url('nodebar.jpg');
-        background-repeat: no-repeat;
-        background-color: #333333;
-        color: white;
-        font-family: Arial;
-        font-size: 18px;
-        line-height: 40px;
-        overflow-x: hidden;
-      }      
-      #nodeTable {
-        border: solid 0px red;
-        padding-left: 4px;
-      }
-      #nodeTable img { 
-        display: block; 
-      }   
-      #nodeTable td.tooltip span {
-          display: none;    
-      }
-      #nodeTable td.tooltip:hover span, a.tooltip:focus span {
-          display:block;
-          position:absolute;
-          padding-left: 5px;
-          padding-right: 5px;
-          background-color:#7640ff;
-          color:#fff;
-          font-size: 11px;
-          line-height: 18px;
-          z-index: 15;
-      }
-      #centercolumn {
-        float: left;
-        margin-left: 100px;
-      }
-      #leaderboard {
-        border: solid 0px yellow;
-        background-image:url('leaderboard.jpg');
-        background-repeat: no-repeat;
-        background-color: #333333;
-        width: 173px;
-        color: white;
-        font-family: Arial;
-        font-size: 18px;
-        line-height: 40px;
-      }
-      #leaders {
-        border: solid 0px red;
-        color: #a1a6a4;
-        font-size: 12px;
-        line-height: 8px;
-      }
-      #leaderTable {
-        width: 170px;
-      }
-      #leaderTable td.leaderplace{
-        padding-left: 3px;
-      }
-      #leaderTable td.leaderplayer{
-        padding-left: 1px;
-      }
-      #leaderTable td.leaderscore{
-        padding-left: 5px;
-      }
-      #individualboard {
-        border: solid 0px lime;
-        width: 173px;
-        margin-top: 15px;
-        font-family: Arial;
-        color: lime;
-        font-size: 12px;
-        padding-left: 5px;
-      }
-      .twitter-timeline {
-        margin-left: 91px;
-      }
-      #registration {
-        color: white;
-        font-size: 12px;
-        font-family: Arial;
-      }
-      #videobg {
-        border: solid 1px #555555;
-        background-color: black;
-        height: 300px;
-        width: 478px;
-        display: none;
-        float: left;
-      }
+        border-collapse: collapse;
+    }
+    th.place {
+      text-align:center; 
+      width: 20%;
+    }
+    th.player {
+      text-align: left;
+      width: 30%;
+    }
+    th.score {
+      text-align:center; 
+      width: 20%;
+    }
+    th.hstreak {
+      text-align:center; 
+      width: 20%;
+    }
+    td {
+      border: solid 0px black;
+    }
+    tr {
+        border-bottom: 1px solid black;
+        border-top: 0px solid black;
+    }​
+    .notransition {
+      /* For Safari 3.1 to 6.0 */
+      -webkit-transition-property: width;
+      -webkit-transition-duration: 0s;
+      -webkit-transition-timing-function: linear;
+      -webkit-transition-delay: 0s;
+      /* Standard syntax */
+      transition-property: width;
+      transition-duration: 0s;
+      transition-timing-function: linear;
+    }
+    .transition {
+      /* For Safari 3.1 to 6.0 */
+      -webkit-transition-property: width;
+      -webkit-transition-duration: 1s;
+      -webkit-transition-timing-function: linear;
+      -webkit-transition-delay: 0s;
+      /* Standard syntax */
+      transition-property: width;
+      transition-duration: 1s;
+      transition-timing-function: linear;
+    }
+    #bar8 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
 
+    }
+    #bar7 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
 
+    }
+    #bar6 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
 
+    }
+    #bar5 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
 
-      #playerstats {
-        border-top: solid 1px black;
-        border-right: solid 1px black;
-        float: left;
-        width: 374px;
-        height: 148px;
-        background-image:url('hoffman.png'); 
-      }
-      #righttopbar {
-        background-image:url('bottomtopbar.png');
-        background-repeat: repeat-x; 
-        border: solid 0px red;
-        font-family: Verdana;
-        font-size: 1em;
-        color: white;
-        text-shadow: 1px 1px #535151;
-        text-align: center;
-        line-height: 27px;
-        vertical-align: center;
-        height: 32px;
-      }
-      #statdetails1 {
-        float: left;
-        border: solid 0px green;
-        width: 130px;
-        margin-top: 21px;
-        padding-left: 40px;
-        font-family: Verdana;
-        font-size: 18px;
-        line-height: 190%;
-        color: black;
-      }
-      #statdetails2 {
-        float: right;
-        border: solid 0px red;
-        width: 145px;
-        margin-top: 21px;
-        margin-right: 45px;
-        font-family: Verdana;
-        font-size: 18px;
-        line-height: 190%;
-        color: black;
-      }
-      #allplayers {
-        border-top: solid 1px black;
-        float: right;
-        width: 375px;
-        height: 148px;
-        background-image:url('hoffman.png'); 
-      }
-      #lefttopbar {
-        background-image:url('bottomtopbar.png');
-        background-repeat: repeat-x; 
-        border: solid 0px red;
-        font-family: Verdana;
-        font-size: 1em;
-        color: white;
-        text-shadow: 1px 1px #535151;
-        text-align: center;
-        line-height: 27px;
-        vertical-align: center;
-        height: 32px;
-      }
-      #playerdetails1 {
-        border: solid 0px blue;
-        height: 118px;
-        margin-top: -3px;
-        overflow: auto;
-        overflow-x: hidden;
-        font-family: Verdana;
-        font-size: 10px;
-        padding-top: -10px;
-        width: 300px;
-        margin: 0 auto;
-        vertical-align: center;
-        text-align: center;
-      }
-      #scoretable {
-          table-layout: fixed;
-          width: 100%;
-          border: solid 0px black;
-          border-collapse: collapse;
-      }
-      th.place {
-        text-align:center; 
-        width: 20%;
-      }
-      th.player {
-        text-align: left;
-        width: 30%;
-      }
-      th.score {
-        text-align:center; 
-        width: 20%;
-      }
-      th.hstreak {
-        text-align:center; 
-        width: 20%;
-      }
-      td {
-        border: solid 0px black;
-      }
-      tr {
-          border-bottom: 1px solid black;
-          border-top: 0px solid black;
-      }​
-      .notransition {
-        /* For Safari 3.1 to 6.0 */
-        -webkit-transition-property: width;
-        -webkit-transition-duration: 0s;
-        -webkit-transition-timing-function: linear;
-        -webkit-transition-delay: 0s;
-        /* Standard syntax */
-        transition-property: width;
-        transition-duration: 0s;
-        transition-timing-function: linear;
-      }
-      .transition {
-        /* For Safari 3.1 to 6.0 */
-        -webkit-transition-property: width;
-        -webkit-transition-duration: 1s;
-        -webkit-transition-timing-function: linear;
-        -webkit-transition-delay: 0s;
-        /* Standard syntax */
-        transition-property: width;
-        transition-duration: 1s;
-        transition-timing-function: linear;
-      }
-      #bar8 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
+    }
+    #bar4 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
 
-      }
-      #bar7 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
+    }
+    #bar3 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
 
-      }
-      #bar6 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
+    }
+    #bar2 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
 
-      }
-      #bar5 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
+    }
+    #bar1 {
+      width: 55px;
+      height: 15px;
+      background: #57afff;
+    }
 
-      }
-      #bar4 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
-
-      }
-      #bar3 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
-
-      }
-      #bar2 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
-
-      }
-      #bar1 {
-        width: 55px;
-        height: 15px;
-        background: #57afff;
-      }
-
-
+    #hiddenbutton input[type="button"]:disabled {
+      background-color: red;
+      color: gray;
+    }
 
 
 
@@ -577,6 +582,32 @@
     </style>
   </head>
   <body>
+    <div id="clock" style="color:white;">
+      <span id="y">tt</span>
+      <script>
+        var cd = <%= current_date %>;
+        var td = <%= target_date %>;
+        var days, hours, minutes, seconds;
+        var clock = setInterval(function () {
+          cd = cd + 1000;
+          var seconds_left = (td - cd) / 1000;
+          days = seconds_left / 86400;
+          seconds_left = seconds_left % 86400;
+           
+          hours = seconds_left / 3600;
+          seconds_left = seconds_left % 3600;
+          minutes = seconds_left / 60;
+          seconds = seconds_left % 60;
+
+          document.getElementById("y").innerHTML = parseInt(days) + "d " + parseInt(hours) + "h " + parseInt(minutes) + "m " + parseInt(seconds) + "s";
+
+          if (days <=0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+            clearInterval(clock);
+            document.getElementById("y").innerHTML = "MegaNokken Begins!";
+          }
+        }, 1000);
+      </script>
+    </div>
   <audio id="myTune">
     <source src="E.wav">
   </audio>
@@ -606,26 +637,57 @@
   </div>
 
   <div id="hiddenbutton" style="display:none; float:left;">
-    ADMIN PANEL<br/>
-    <input type="button" id="showvideo" value="Show Video" onClick="triggerVideo();"><br />
-    <input type="button" id="hidevideo" value="Hide Video" onClick="triggerHideVideo();"><br />
-    <input type="button" id="chart" value="Q Chart" onClick="triggerChart();"><br />
-    <input type="button" id="E" value="Ranks" onClick="triggerEvent();"><br/>
-    <input type="button" id="a1" value="Set Q1" onClick="setQ('setq1', 'a1');"><br/>
-    <input type="button" id="a2" value="Set Q2" onClick="setQ('setq2', 'a2');"><br/>
-    <input type="button" id="a3" value="Set Q3" onClick="setQ('setq3', 'a3');"><br/>
-    <input type="button" id="a4" value="Set Q4" onClick="setQ('setq4', 'a4');"><br/>
-    <input type="button" id="a5" value="Set Q5" onClick="setQ('setq5', 'a5');"><br/>
-    <input type="button" id="a6" value="Set Q6" onClick="setQ('setq6', 'a6');"><br/>
-    <input type="button" id="a7" value="Set Q7" onClick="setQ('setq7', 'a7');"><br/>
-    <input type="button" id="a8" value="Set Q8" onClick="setQ('setq8', 'a8');"><br/>
-    <input type="button" id="a9" value="Set Q9" onClick="setQ('setq9', 'a9');"><br/>
-    <input type="button" id="a10" value="Set Q10" onClick="setQ('setq10', 'a10');"><br/>
-    <input type="button" id="a11" value="Set Q11" onClick="setQ('setq11', 'a11');"><br/>
-    <input type="button" id="a12" value="Set Q12" onClick="setQ('setq12', 'a12');"><br/>
-    <input type="button" id="a13" value="Set Q13" onClick="setQ('setq13', 'a13');"><br/>
-    <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
-    <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
+    <span style="color: white;">ADMIN PANEL<br/>
+    <input type="button" id="showvideo" value="Show Vid" onClick="triggerVideo();">
+    <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();">
+    <input type="button" id="E" value="Ranks" onClick="triggerEvent();"><br/><br/>
+    <div id="admin1" style="float: left;">
+      <input type="button" id="a1" value="Set Q1" onClick="setQ('setq1', 'a1');"><br/>
+      <input type="button" id="a2" value="Set Q2" onClick="setQ('setq2', 'a2');"><br/>
+      <input type="button" id="a3" value="Set Q3" onClick="setQ('setq3', 'a3');"><br/>
+      <input type="button" id="a4" value="Set Q4" onClick="setQ('setq4', 'a4');"><br/>
+      <input type="button" id="a5" value="Set Q5" onClick="setQ('setq5', 'a5');"><br/>
+      <input type="button" id="a6" value="Set Q6" onClick="setQ('setq6', 'a6');"><br/>
+      <input type="button" id="a7" value="Set Q7" onClick="setQ('setq7', 'a7');"><br/>
+      <input type="button" id="a8" value="Set Q8" onClick="setQ('setq8', 'a8');"><br/>
+      <input type="button" id="a9" value="Set Q9" onClick="setQ('setq9', 'a9');"><br/>
+      <input type="button" id="a10" value="Set Q10" onClick="setQ('setq10', 'a10');"><br/>
+    </div>
+    <div id="admin2" style="float: left;">
+      <input type="button" id="showvideo" value="Show Vid" onClick="triggerVideo();"><br />
+      <input type="button" id="chart" value="Chart1" onClick="triggerChart();"><br />
+      <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
+      <input type="button" id="a11" value="Set Q11" onClick="setQ('setq11', 'a11');"><br/>
+      <input type="button" id="a12" value="Set Q12" onClick="setQ('setq12', 'a12');"><br/>
+      <input type="button" id="a13" value="Set Q13" onClick="setQ('setq13', 'a13');"><br/>
+      <input type="button" id="a14" value="Set Q14" onClick="setQ('setq14', 'a14');"><br/>
+      <input type="button" id="a15" value="Set Q15" onClick="setQ('setq15', 'a15');"><br/>
+      <input type="button" id="a16" value="Set Q16" onClick="setQ('setq16', 'a16');"><br/>
+      <input type="button" id="a17" value="Set Q17" onClick="setQ('setq17', 'a17');"><br/>
+      <input type="button" id="a18" value="Set Q18" onClick="setQ('setq18', 'a18');"><br/>
+      <input type="button" id="a19" value="Set Q19" onClick="setQ('setq19', 'a19');"><br/>
+      <input type="button" id="a20" value="Set Q20" onClick="setQ('setq20', 'a20');"><br/>
+    </div>
+    <div id="admin3" style="float: left;">
+      <input type="button" id="showvideo" value="Show Vid" onClick="triggerVideo();"><br />
+      <input type="button" id="chart2" value="Chart2" onClick="triggerChart2();"><br />
+      <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
+      <input type="button" id="a21" value="Set Q21" onClick="setQ('setq21', 'a21');"><br/>
+      <input type="button" id="a22" value="Set Q22" onClick="setQ('setq22', 'a22');"><br/>
+      <input type="button" id="a23" value="Set Q23" onClick="setQ('setq23', 'a23');"><br/>
+      <input type="button" id="a24" value="Set Q24" onClick="setQ('setq24', 'a24');"><br/>
+      <input type="button" id="a25" value="Set Q25" onClick="setQ('setq25', 'a25');"><br/>
+      <input type="button" id="a26" value="Set Q26" onClick="setQ('setq26', 'a26');"><br/>
+      <input type="button" id="a27" value="Set Q27" onClick="setQ('setq27', 'a27');"><br/>
+      <input type="button" id="a28" value="Set Q28" onClick="setQ('setq28', 'a28');"><br/>
+      <input type="button" id="a29" value="Set Q29" onClick="setQ('setq29', 'a29');"><br/>
+      <input type="button" id="a30" value="Set Q30" onClick="setQ('setq30', 'a30');"><br/>
+    </div>
+    <div id="admin4" style="float: left;">
+      <input type="button" id="showvideo" value="Show Vid" onClick="triggerfinalVideo();"><br />
+      <input type="button" id="chart3" value="Chart3" onClick="triggerChart3();"><br />
+      <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
+    </div>
   </div>
 
   <div id="wrapper">
@@ -652,7 +714,7 @@
       </div>
       <div id="container" style="width:378px; height:298px; border: solid 1px #555555; float:right; display:none;"></div>
       <div id="questionnumber">
-        Question <span id="thequestionnumber">0</span> of 15
+        Question <span id="thequestionnumber">0</span> of 30
       </div>
       <div id="qicon">
         <img src="questionicon.jpg">
