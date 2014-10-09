@@ -1,13 +1,18 @@
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
+
 var io = require('socket.io')(http);
 var ejs = require('ejs');
 var fs = require('fs');
+var favicon = require('serve-favicon');
 
 app.get('/', function(req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
 
+
+app.use(favicon(__dirname + '/public/favicon.ico'));
   //since we are in a request handler function
   //we're using readFile instead of readFileSync
   fs.readFile('index.html', 'utf-8', function(err, content) {
@@ -16,7 +21,7 @@ app.get('/', function(req, res) {
       return;
     }
 
-    var target_date = new Date("Oct 2, 2014 22:02:00").getTime();
+    var target_date = new Date("Oct 6, 2014 20:41:00").getTime();
     var current_date = new Date().getTime();
 
     var renderedHtml = ejs.render(content, {target_date: target_date, current_date: current_date});  //get redered HTML code
@@ -782,8 +787,20 @@ var answerB1 = 'B';
 var answerC1 = 'C';
 var answerD1 = 'D';
 var questionNumber = 'question1';
+var preGame = false;
 
 io.on('connection', function(socket) {
+	socket.on('getPreGame', function() {
+		preGame = true;
+		io.emit('showingPreVideo');
+	});
+	if (preGame == true) {
+		socket.emit('showingPreVideo');
+	}
+	socket.on('getEndPreGame', function() {
+		preGame = false;
+		io.emit('gameIsReady');
+	});
     socket.emit('change_header', {
         header: header,
         qNum: 0,
@@ -1010,6 +1027,9 @@ socket.emit('publishrank', myRank, nodeList, winnerList2, usersplaying, leaderLi
 		var myRightAnswers = socket.id.rightanswers;
 		var myWrongAnswers = socket.id.notanswered + socket.id.wronganswers; 
 		socket.emit('piechart', myRightAnswers, myWrongAnswers);
+	});
+	socket.on('getPreVideo', function(){
+		io.emit('showingPreVideo');
 	});
 	socket.on('getVideo', function(){
 		io.emit('showingVideo');

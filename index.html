@@ -1,18 +1,82 @@
 <!doctype html>
 <html>
   <head>
-    <title>MegaNokken</title>
+    <title>Mega Nokken</title>
     <link rel="stylesheet" href="jquery.mCustomScrollbar.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript">
     </script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-55451109-1', 'auto');
+      ga('send', 'pageview');
+    </script>
     <style>
     body {
-      background-image:url('bg.jpg');
-      background-repeat: repeat;
+      background-color: #2c2b2b;
       margin: 0;
+    }
+    #centermiddle {
+      font-family: "open sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+      text-transform: uppercase;
+      line-height: 105%;
+      letter-spacing: 1px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
+      color: white;
+      font-size: 44px;
+    }
+    #clock {
+      font-family: "open sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+      line-height: 105%;
+      letter-spacing: 1px;
+      font-weight: bold;
+      color: white;
+      font-size: 34px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #newplayers {
+      font-family: Arial;
+      font-size: 16px;
+      color: white;
+      line-height: 20px;
+      text-align: left;
+      width: 835px;
+      margin: 0 auto;
+    }
+    #newplayers a {
+      color: #744bf9;
+      text-decoration: none;
+    }
+    #newplayers a:hover {
+      color: #57afff;
+    }
+    #namefield {
+      font-size: 17px;
+      width: 158px;
+      vertical-align: bottom;
+      height: 26px;
+    }
+    #enterMN {
+      font-size: 17px;
+      color: white;
+      background: #744bf9;
+      border: 1px solid white;
+      height: 32px;
+      vertical-align: bottom;
+      -webkit-appearance: none;
+    }
+    #game {
+      display: none;
     }
     #messageplaceholder{
       display: none;
@@ -25,6 +89,7 @@
       background-color: #393939;
       overflow: auto;
       overflow-y:hidden;
+      padding-bottom: 20px;
     }
     #topbar {
       border: solid 0px black;
@@ -39,12 +104,15 @@
       vertical-align: middle;
       line-height: 73px;
       padding-right: 15px;
-      font-family: Consolas, monaco, monospace;
-      font-size: 1.15em;
+      font-family: "open sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+      font-size: 26px;
+      text-transform: uppercase;
+      font-weight: bold;
       color: white;
       text-shadow: 1px 1px #535151;
     }
     #toprighttext a{
+      text-decoration: none;
       color: white;
     }
     #banner {
@@ -379,6 +447,7 @@
       margin-left: 91px;
     }
     #registration {
+      display: none;
       color: white;
       font-size: 12px;
       font-family: Arial;
@@ -576,38 +645,37 @@
       color: gray;
     }
 
+    #hiddenbutton .nonQ {
+      background-color: #744bf9;
+      color: white;
+    }
 
+    #hiddenbutton #rankbutton {
+      background-color: #ff6000;
+      color: white;
+    }
+
+    #aboutsection {
+      color: white;
+      display: none;
+      font-family: "open sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+      font-size: 17px;
+      width: 775px;
+      margin: 0 auto;
+    }
+    #aboutsection a {
+      text-decoration: none;
+      color: #744bf9;
+    }
+    #aboutsection a:hover {
+      color: #57afff;
+    }
 
 
     </style>
   </head>
   <body>
-    <div id="clock" style="color:white;">
-      <span id="y">tt</span>
-      <script>
-        var cd = <%= current_date %>;
-        var td = <%= target_date %>;
-        var days, hours, minutes, seconds;
-        var clock = setInterval(function () {
-          cd = cd + 1000;
-          var seconds_left = (td - cd) / 1000;
-          days = seconds_left / 86400;
-          seconds_left = seconds_left % 86400;
-           
-          hours = seconds_left / 3600;
-          seconds_left = seconds_left % 3600;
-          minutes = seconds_left / 60;
-          seconds = seconds_left % 60;
 
-          document.getElementById("y").innerHTML = parseInt(days) + "d " + parseInt(hours) + "h " + parseInt(minutes) + "m " + parseInt(seconds) + "s";
-
-          if (days <=0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
-            clearInterval(clock);
-            document.getElementById("y").innerHTML = "MegaNokken Begins!";
-          }
-        }, 1000);
-      </script>
-    </div>
   <audio id="myTune">
     <source src="E.wav">
   </audio>
@@ -626,21 +694,16 @@
   <audio id ="applause">
     <source src="applause.wav">
   </audio>
-  
-  <div id="registration">
-    <p id="browswer"></p>
-    Enter your name:
-    <form onSubmit="return master();">
-      <input type="text" id="namefield">
-      <input type="submit" value="Set nickname">
-    </form>
+
+  <div id="hiddenlink" style="display:none">
+    <a href="#" id="gameReady">&nbsp;</a>
   </div>
 
   <div id="hiddenbutton" style="display:none; float:left;">
     <span style="color: white;">ADMIN PANEL<br/>
-    <input type="button" id="showvideo" value="Show Vid" onClick="triggerVideo();">
-    <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();">
-    <input type="button" id="E" value="Ranks" onClick="triggerEvent();"><br/><br/>
+    <input type="button" class="nonQ" id="pregame" value="Set Pre Game" onClick="preGame();">
+    <input type="button" class="nonQ" id="hidevideo" value="End Pre Game" onClick="endPreGame();">
+    <input type="button" id="rankbutton" value="Ranks" onClick="triggerEvent();"><br/><br/>
     <div id="admin1" style="float: left;">
       <input type="button" id="a1" value="Set Q1" onClick="setQ('setq1', 'a1');"><br/>
       <input type="button" id="a2" value="Set Q2" onClick="setQ('setq2', 'a2');"><br/>
@@ -654,9 +717,9 @@
       <input type="button" id="a10" value="Set Q10" onClick="setQ('setq10', 'a10');"><br/>
     </div>
     <div id="admin2" style="float: left;">
-      <input type="button" id="showvideo" value="Show Vid" onClick="triggerVideo();"><br />
-      <input type="button" id="chart" value="Chart1" onClick="triggerChart();"><br />
-      <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
+      <input type="button" class="nonQ" id="showvideo" value="Show Vid" onClick="triggerVideo();"><br />
+      <input type="button" class="nonQ" id="chart" value="Chart1" onClick="triggerChart();"><br />
+      <input type="button" class="nonQ" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
       <input type="button" id="a11" value="Set Q11" onClick="setQ('setq11', 'a11');"><br/>
       <input type="button" id="a12" value="Set Q12" onClick="setQ('setq12', 'a12');"><br/>
       <input type="button" id="a13" value="Set Q13" onClick="setQ('setq13', 'a13');"><br/>
@@ -669,9 +732,9 @@
       <input type="button" id="a20" value="Set Q20" onClick="setQ('setq20', 'a20');"><br/>
     </div>
     <div id="admin3" style="float: left;">
-      <input type="button" id="showvideo" value="Show Vid" onClick="triggerVideo();"><br />
-      <input type="button" id="chart2" value="Chart2" onClick="triggerChart2();"><br />
-      <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
+      <input type="button" class="nonQ" id="showvideo" value="Show Vid" onClick="triggerVideo();"><br />
+      <input type="button" class="nonQ" id="chart2" value="Chart2" onClick="triggerChart2();"><br />
+      <input type="button" class="nonQ" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
       <input type="button" id="a21" value="Set Q21" onClick="setQ('setq21', 'a21');"><br/>
       <input type="button" id="a22" value="Set Q22" onClick="setQ('setq22', 'a22');"><br/>
       <input type="button" id="a23" value="Set Q23" onClick="setQ('setq23', 'a23');"><br/>
@@ -684,9 +747,9 @@
       <input type="button" id="a30" value="Set Q30" onClick="setQ('setq30', 'a30');"><br/>
     </div>
     <div id="admin4" style="float: left;">
-      <input type="button" id="showvideo" value="Show Vid" onClick="triggerfinalVideo();"><br />
-      <input type="button" id="chart3" value="Chart3" onClick="triggerChart3();"><br />
-      <input type="button" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
+      <input type="button" class="nonQ" id="showvideo" value="Show Vid" onClick="triggerfinalVideo();"><br />
+      <input type="button" class="nonQ" id="chart3" value="Chart3" onClick="triggerChart3();"><br />
+      <input type="button" class="nonQ" id="hidevideo" value="Hide Vid" onClick="triggerHideVideo();"><br />
     </div>
   </div>
 
@@ -696,159 +759,277 @@
         <img src="logo.png">
       </div>
       <div id="toprighttext">
-          <a href="#">Home</a>
-          |
-          <a href="#">About</a>
-          |
-          <a href="#">Contact</a>
+          <a href="#" id="play">Play</a>
+          &nbsp;|&nbsp;
+          <a href="#" id="about">About</a>
       </div>
     </div>
-    <div id="banner">
-      
-    </div>
-    <div id="mainsection">
-      <div id="videobg">
-        <div id="video" style="display:none;">
-          <iframe src="http://www.twitch.tv/streamerhouse/embed" frameborder="0" scrolling="no" height="300" width="478"></iframe>
-        </div>
-      </div>
-      <div id="container" style="width:378px; height:298px; border: solid 1px #555555; float:right; display:none;"></div>
-      <div id="questionnumber">
-        Question <span id="thequestionnumber">0</span> of 30
-      </div>
-      <div id="qicon">
-        <img src="questionicon.jpg">
-      </div>
-      <div id="questiondiv">
-        <span id="header"></span>
-      </div>
-      <!--
-      <div id="timerdiv">
-        <span id="timer"></span>
-      </div>
-    -->
-      <div id="timergraphic">
-        <table id="timetable">
-          <td><div id="bar1"></div></td>
-          <td><div id="bar2"></div></td>
-          <td><div id="bar3"></div></td>
-          <td><div id="bar4"></div></td>
-          <td><div id="bar5"></div></td>
-          <td><div id="bar6"></div></td>
-          <td><div id="bar7"></div></td>
-          <td><div id="bar8"></div></td>
-        </table>
-      </div>
-
-      <div id="buttons"><!--inline borders for each div don't cover whole button-->
-        <div id="buttona" style="display: inline; border: solid 0px red;">
-          <input type="button" id="A" class="answer" onClick="submitAnswer('A'); playMusic();">
-          <div id="bonusa" style="display: inline;">
-            <img src="bonus.png">
-          </div>
-        </div>
-        <div id="buttonb" style="display: inline; border: solid 0px red;">
-          <input type="button" id="B" class="answer" onClick="submitAnswer('B'); playMusic();">
-          <div id="bonusb" style="display: inline;">
-            <img src="bonus.png">
-          </div>
-        </div>
-        <div id="buttonc" style="display: inline; border: solid 0px red;">
-          <input type="button" id="C" class="answer" onClick="submitAnswer('C'); playMusic();">
-          <div id="bonusc" style="display: inline;">
-            <img src="bonus.png">
-          </div>        
-        </div>
-        <div id="buttond" style="display: inline; border: solid 0px red;">
-          <input type="button" id="D" class="answer" onClick="submitAnswer('D'); playMusic();">
-          <div id="bonusd" style="display: inline;">
-            <img src="bonus.png">
-          </div>
-        </div>
-      </div>
-      <div id="correctanswerdiv">
-        <p id="correctanswerp"></p>
-      </div>
-      <div id="messageplaceholder"></div>
-    </div>
-
-
-    <div id="statsrow1">
-      <div id="playerpanel">
-        <div id="playerpanelname">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="playername">Player</span></div>
-        <div id="scorepanel">
-          <span id="myscore">0</span>
-          <span style="font-size: 16px; display: block; margin-top: -10px; color: #a1a6a4">Score</span>
-        </div>
-        <div id="rankpanel">
-          <span id="myrank">0</span>
-          <span style="font-size: 16px; display: block; margin-top: -10px; color: #a1a6a4">Rank</span>
-        </div>
-      </div>
-      <div id="container2" style="width:350px; height:100px; border: solid 1px #555555; float: left; margin-left: 57px; background-color: #333333"><img src="initialpiechart.jpg"></div>
-      <div id="extrastats">
-        <div id="extrastatstitle">
-          Stats
-        </div>
-          <div id="speedpanel">
-            <div id="speedtopbox">
-              <span id="myavganswertime">0</span>
-            </div>
-            <div id="bottomlabel">
-              <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">Avg. Speed</span>
-            </div>
-          </div>
-          <div id="cstreakpanel">
-            <span id="mystreak">0</span>
-            <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">Current Streak</span>
-          </div>
-          <div id="hstreakpanel">
-            <span id="mytopstreak">0</span>
-            <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">High Streak</span>
-          </div>
-        </div>
-      </div>
-      <div id="statsrow2">
-        <div id="grandparent">
-          <div id="nodesdiv">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="usersplaying">--</span>&nbsp;Users Playing
-            <span id="rankingp"></span>
-          </div>
-        </div>
-        <div id="centercolumn">
-          <div id="leaderboard">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leaderboard
-            <div id="leaders">
-            </div>
-          </div>
-          <div id="individualboard">
-            <table>
-              <tr>
-                <td id="individualrank"></td>
-                <td id="individualname"></td>
-                <td id="individualscore"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-          <a class="twitter-timeline" href="https://twitter.com/MegaNokken" width="351px"data-widget-id="511354397796737024" height="350px">Tweets by @MegaNokken</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-          </script>
-      </div>
-    </div>
-
-    <!--
-    <div id="allplayers">
-      <div id="righttopbar">
-        All Players
+    <!-- SPLASH PAGE -->
+    <div id="splash">
+      <br/>
+      <div id="center">
+        <img src="slider.jpg">
       </div>
       
-      <div id="playerdetails1">
-        <span id="oldtable"></span>
+      <div id="centermiddle">
+        <span style="color: lime">Live Trivia Colosseum</span>
+      </div>
+      <br/><br/><br/>
+      <div id="clock">
+        <span id="countdowntext" style="color: #744bf9;">GAME OPENS IN:  </span><br/>
+        <div id="countdown" style="color:white;">
+          <span id="y">&nbsp;</span>
+        </div>
+        <br/>
+        <div id="registration">
+          <span style="font-size: 15px;">No registration required! Enter your nickname below to begin game session.</span><br/>
+          <span style="font-size: 19px; color: lime;">Nickname:</span>
+          <form onSubmit="return master();">
+            <input type="text" id="namefield">
+            <input type="submit" id="enterMN" value="Enter Mega Nokken">
+          </form>
+          Your Browser: <span id="browser"></span>
+        </div>
+        <br/>
+        <div id="newplayers">
+          <span style="color: lime; font-size: 20px">New Players:</span><br/>
+          Mega Nokken is a real-time trivia game so each game is scheduled for a particular day and time. Read our <a href="#" id="about2">About</a> section to find out more and keep tabs on us with Facebook or Twitter.
+        </div>
+        <br/><a href="http://twitter.com/MegaNokken" target="_blank"><img src="twitter.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.facebook.com/pages/Mega-Nokken/304510636405803#" target="_blank"><img src="facebook.png"></a>
+      </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="aboutsection">
+      <h2>A Real-Time Trivia Gameshow</h2><br/>
+
+      <strong><span style="color: lime">What is Mega Nokken?</span></strong><br/>
+      Mega Nokken is a real-time multiplayer trivia game played right in your browser. To find out when the next game is scheduled you can follow MN on <a target="_blank" href="https://twitter.com/MegaNokken">Twitter</a> or on <a target="_blank" href="https://www.facebook.com/pages/Mega-Nokken/304510636405803#">Facebook</a>. 
+      <br/><br/>
+
+      <strong><span style="color: lime">Is Mega Nokken really live?</span></strong><br/>
+      Totally. This is a real-time application so everyone will be seeing the questions at the exact same time and you'll see everyone else's score as the game progresses.
+      <br/><br/>
+
+      <strong><span style="color: lime">Do I need to install anything to play Mega Nokken?</span></strong><br/>
+      Mega Nokken is played right in your browser. No applets or added software are required. You only need a your Web browser with JavaScript enabled.
+      <br/><br/>
+
+      <strong><span style="color: lime">Is Mega Nokken family friendly?</span></strong><br/>
+      Yes. There is no adult content or foul language.
+      <br/><br/>
+
+      <strong><span style="color: lime">What kinds of questions are asked?</span></strong><br/>
+      Anything and everything. Some are easy and others are quite difficult.
+      <br/><br/>
+
+      <strong><span style="color: lime">My answers are becoming inactive before the question timer runs out. What's happening?</span></strong><br/>
+      If your browser window is inactive or out of focus, it needs some time to reprocess the program so your timer will be temporarily out of sync with the actual question time. It's not broken, just keep your browser window active while the game is playing and everything will sync up again.
+      <br/><br/>
+
+      <div id="instructions" style="clear:both">
+        <h2>Gameplay Instructions</h2>
+
+        <span style="color: lime"><strong>Mega Nokken is an extremely simple game. But just in case this is your first time playing, here's how to play:</strong></span><br/><br/>
+
+        <strong>1)</strong> You will be able to enter the Mega Nokken Colosseum 10 minutes before game time. At that time, a registration box will appear.<br/>
+        <strong>2)</strong> Enter you nickname in the registration box and click "Enter Mega Nokken."<br/>
+        <strong>3)</strong> You will be taken to the the Colosseum interface where you'll see your score, stats, and other information.<br/>
+        <strong>4)</strong> Once inside the Colosseum, do NOT close out the browser window, refresh the page, or navigate to another link. Doing so, will immediately disconnect your session and you will lose your progress in the game.<br/>
+        <strong>5)</strong> The game will begin at its scheduled time. Players may enter the Colosseum late, but they will not have the opportunity to answer any missed questions.<br/>
+        <strong>6)</strong> Once the game begins, you will be presented with 30 random trivia questions, one at a time. There are two brief intermission periods: 1 after question 10 and another after question 20.<br/>
+        <strong>7)</strong> When question is presented, you will have 8 seconds to answer it by selecting one of the purple answer buttons. If you fail to select an answer within the 8 second period, the buttons will deactivate and you will automatically get the question wrong. Once you select an answer, you may not change your selection so choose wisely.<br/>
+        <strong>8)</strong> If a correct answer is selected, you will receive 100 points. However, if the answer was selected within the first two seconds you will received an additional 25 bonus points for a fast answer.<br/>
+        <strong>9)</strong> The game ends after the 30th question. The top ten players with the most points will rightfully triumph as the victors of Mega Nokken.
+      </div>
+
+      <br/>
+      <h2>Browser Requirements</h2>
+      <div id="bleft" style="float:left">
+        <h3><span style="color: lime">Minimum Browser Requirements</span></h3>
+        <ol>
+          <li>Chrome (latest version)</li>
+          <li>FireFox (v. 10+)</li>
+          <li>Internet Explorer (v. 10+)</li>
+          <li>Safari (v. 5+)</li>
+        </ol>
+      </div>
+
+      <div id="bright" style="float: right">
+        <h3><span style="color: lime">Recommended Browsers</span></h3>
+        <ol>
+          <li>Chrome</li>
+          <li>FireFox</li>
+          <li>Internet Explorer</li>
+        </ol>
+        *Safari does not support in-game sound effects
+      </div>
+
+      <div id="contactfeedback" style="clear:both">
+        <br/>
+        <h2>Questions/Feedback</h2>
+
+        We'd love to hear from you. If you have any questions or feedback regarding Mega Nokken please contact us at info@MegaNokken.com
+      </div>
+    </div>
+
+    <!-- GAME PAGE -->
+    <div id="game">
+      <div id="banner">
+        
+      </div>
+      <div id="mainsection">
+        <div id="videobg">
+          <div id="video" style="display:none;">
+            <div id="IframeWrapper" style="position: relative;">
+              <div id="iframeBlocker" style="position: absolute; top: 0; left: 0; width: 478px; height: 273px"></div>
+              <!-- This creates an invisble/unclickable shield 273px high so users can't click the video screen and be taken to the Twitch page and lose the game session. target="_blank" will not work with the iframe so this was the only option -->
+            <iframe src="http://www.twitch.tv/streamerhouse/embed" frameborder="0" scrolling="no" height="300" width="478" id="page"></iframe>
+          </div>
+          </div>
+        </div>
+        <div id="container" style="width:378px; height:298px; border: solid 1px #555555; float:right; display:none;"></div>
+        <div id="questionnumber">
+          Question <span id="thequestionnumber">0</span> of 30
+        </div>
+        <div id="qicon">
+          <img src="questionicon.jpg">
+        </div>
+        <div id="questiondiv">
+          <span id="header"></span>
+        </div>
+        <!--
+        <div id="timerdiv">
+          <span id="timer"></span>
+        </div>
+      -->
+        <div id="timergraphic">
+          <table id="timetable">
+            <td><div id="bar1"></div></td>
+            <td><div id="bar2"></div></td>
+            <td><div id="bar3"></div></td>
+            <td><div id="bar4"></div></td>
+            <td><div id="bar5"></div></td>
+            <td><div id="bar6"></div></td>
+            <td><div id="bar7"></div></td>
+            <td><div id="bar8"></div></td>
           </table>
+        </div>
+
+        <div id="buttons"><!--inline borders for each div don't cover whole button-->
+          <div id="buttona" style="display: inline; border: solid 0px red;">
+            <input type="button" id="A" class="answer" onClick="submitAnswer('A'); playMusic();">
+            <div id="bonusa" style="display: inline;">
+              <img src="bonus.png">
+            </div>
+          </div>
+          <div id="buttonb" style="display: inline; border: solid 0px red;">
+            <input type="button" id="B" class="answer" onClick="submitAnswer('B'); playMusic();">
+            <div id="bonusb" style="display: inline;">
+              <img src="bonus.png">
+            </div>
+          </div>
+          <div id="buttonc" style="display: inline; border: solid 0px red;">
+            <input type="button" id="C" class="answer" onClick="submitAnswer('C'); playMusic();">
+            <div id="bonusc" style="display: inline;">
+              <img src="bonus.png">
+            </div>        
+          </div>
+          <div id="buttond" style="display: inline; border: solid 0px red;">
+            <input type="button" id="D" class="answer" onClick="submitAnswer('D'); playMusic();">
+            <div id="bonusd" style="display: inline;">
+              <img src="bonus.png">
+            </div>
+          </div>
+        </div>
+        <div id="correctanswerdiv">
+          <p id="correctanswerp"></p>
+        </div>
+        <div id="messageplaceholder"></div>
       </div>
+
+
+      <div id="statsrow1">
+        <div id="playerpanel">
+          <div id="playerpanelname">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="playername">Player</span></div>
+          <div id="scorepanel">
+            <span id="myscore">0</span>
+            <span style="font-size: 16px; display: block; margin-top: -10px; color: #a1a6a4">Score</span>
+          </div>
+          <div id="rankpanel">
+            <span id="myrank">0</span>
+            <span style="font-size: 16px; display: block; margin-top: -10px; color: #a1a6a4">Rank</span>
+          </div>
+        </div>
+        <div id="container2" style="width:350px; height:100px; border: solid 1px #555555; float: left; margin-left: 57px; background-color: #333333"><img src="initialpiechart.jpg"></div>
+        <div id="extrastats">
+          <div id="extrastatstitle">
+            Stats
+          </div>
+            <div id="speedpanel">
+              <div id="speedtopbox">
+                <span id="myavganswertime">0</span>
+              </div>
+              <div id="bottomlabel">
+                <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">Avg. Speed</span>
+              </div>
+            </div>
+            <div id="cstreakpanel">
+              <span id="mystreak">0</span>
+              <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">Current Streak</span>
+            </div>
+            <div id="hstreakpanel">
+              <span id="mytopstreak">0</span>
+              <span style="font-size: 14px; display: block; margin-top: -10px; color: #a1a6a4">High Streak</span>
+            </div>
+          </div>
+        </div>
+        <div id="statsrow2">
+          <div id="grandparent">
+            <div id="nodesdiv">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="usersplaying">--</span>&nbsp;Users Playing
+              <span id="rankingp"></span>
+            </div>
+          </div>
+          <div id="centercolumn">
+            <div id="leaderboard">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leaderboard
+              <div id="leaders">
+              </div>
+            </div>
+            <div id="individualboard">
+              <table>
+                <tr>
+                  <td id="individualrank"></td>
+                  <td id="individualname"></td>
+                  <td id="individualscore"></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+            <a class="twitter-timeline" href="https://twitter.com/MegaNokken" width="351px"data-widget-id="511354397796737024" height="350px">Tweets by @MegaNokken</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+            </script>
+        </div>
+      </div>
+
+      <!--
+      <div id="allplayers">
+        <div id="righttopbar">
+          All Players
+        </div>
+        
+        <div id="playerdetails1">
+          <span id="oldtable"></span>
+            </table>
+        </div>
+      </div>
+       -->
+    <br/>
+    <br/>
+    <br/>
+    <span style="color: #afafaf; font-family: Arial; font-size: 13px">&copy; 2014 Copyright Mega Nokken | All Rights Reserved</span>
     </div>
-     -->
   </div>
 
  
@@ -891,6 +1072,16 @@
         alert('Name must contain 1 or more characters.');
         return false;
       }
+      //Configure User Page View
+      document.getElementById('play').style.color = "lime";
+      document.getElementById('play').innerHTML = "Game In Progress";
+      gameEntered = true;
+      console.log(gameEntered);
+      $(document).ready(function(){
+          $("#game").show(1000);
+          $("#splash").hide(1000);
+          $("#aboutsection").hide(1000);
+      });
       connect();
       submitName();
       document.getElementById('registration').style.display = "none";
@@ -908,15 +1099,69 @@
     var M= ua.match(/(opera|chrome|safari|firefox|msie|trident)\/?\s*(\.?\d+(\.\d+)*)/i);
     if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) {M[2]=tem[1];}
     M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
-    document.getElementById('browswer').innerHTML = M;
+    document.getElementById('browser').innerHTML = M;
     M = String(M);
     if ((M.substring(0,6) == "Chrome") || (M.substring(0,7) == "Firefox" && M.substring(8,10) >= 10) || (M.substring(0,6) == "Safari" && M.substring(7,9) >= 5) || (M.substring(0,4) == "MSIE" && M.substring(5,7) >= 10)) {
 
     } else {
       document.getElementById('registration').style.visibility = "hidden";
-      alert('Browser not supported.'); //Enter a message somewhere
+      document.getElementById('y').style.visibility = "hidden";
+      document.getElementById('countdowntext').innerHTML = "Browser version not supported."
     }
+
+    $(document).ready(function(){
+      $("#about").click(function(){
+        $("#aboutsection").show(1000);
+        $("#game").hide(1000);
+        $("#splash").hide(1000);
+      });
+      $("#about2").click(function(){
+        $("#aboutsection").show(1000);
+        $("#game").hide(1000);
+        $("#splash").hide(1000);
+      });
+      $("#play").click(function(){
+        $("#aboutsection").hide(1000);
+        if (gameEntered == true) {
+          $("#game").show(1000);
+        }
+        else {
+          $("#splash").show(1000);
+        }
+      });
+      $("#gameReady").click(function(){
+        $("#registration").show(1000);
+      });
+    });
+
+    var cd = <%= current_date %>;
+    var td = <%= target_date %>;
+    var days, hours, minutes, seconds;
+    var clock = setInterval(function () {
+      cd = cd + 1000;
+      var seconds_left = (td - cd) / 1000;
+      days = seconds_left / 86400;
+      seconds_left = seconds_left % 86400;
+       
+      hours = seconds_left / 3600;
+      seconds_left = seconds_left % 3600;
+      minutes = seconds_left / 60;
+      seconds = seconds_left % 60;
+
+      document.getElementById("y").innerHTML = parseInt(days) + "d " + parseInt(hours) + "h " + parseInt(minutes) + "m " + parseInt(seconds) + "s";
+
+      if (days <=0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+        clearInterval(clock);
+        document.getElementById("y").innerHTML = "MegaNokken Begins!";
+        $("#gameReady").click();
+        
+        //document.getElementById('registration').style.display = "block";
+      }
+    }, 1000);
+
+    var gameEntered = false;
   </script>
 </body>
 </html>
+
 

@@ -251,6 +251,14 @@
     }
   }
 
+  function preGame(){
+    socket.emit('getPreGame');
+  }
+
+  function endPreGame(){
+    socket.emit('getEndPreGame');
+  }
+
   function triggerEvent(){
     socket.emit('getRanks');
   }
@@ -536,6 +544,36 @@
     });
 
 //Show Video
+socket.on('showingPreVideo', function() {
+  $("#videobg").show(1200);
+  $("#container").show(1200);
+  $("#questionnumber").hide(1200);
+  $("#qicon").hide(1200);
+  $("#questiondiv").hide(1200);
+  $("#timergraphic").hide(1200);
+  $("#buttons").hide(1200);
+  $("#correctanswerdiv").hide(1200);
+  $("#messageplaceholder").hide(1200);
+  document.getElementById('video').style.display = "block";
+  document.getElementById('banner').style.visibility = "visible";
+  document.getElementById('banner').innerHTML = "Pre-Game";
+});
+
+socket.on('gameIsReady', function() {
+  $("#videobg").hide();
+  $("#container").hide();
+  $("#questionnumber").show(1200);
+  $("#qicon").show(1200);
+  $("#questiondiv").show(1200);
+  $("#timergraphic").show(1200);
+  $("#buttons").show(1200);
+  $("#correctanswerdiv").show(1200);
+  $("#messageplaceholder").show(1200);
+  document.getElementById('messageplaceholder').style.display = "none";
+  document.getElementById('video').style.display = "none";
+  document.getElementById('banner').style.visibility = "hidden";
+  //Be aware that the sound is still on at this point
+});
 
 socket.on('showingVideo', function() {
   $("#videobg").show(1200);
