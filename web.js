@@ -21,7 +21,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
       return;
     }
 
-    var target_date = new Date("Oct 10, 2014 05:03:00").getTime(); //add 7 hours to current time
+    var target_date = new Date("Oct 20, 2014 02:00:00").getTime(); //add 7 hours to current time
     var current_date = new Date().getTime();
 
     var renderedHtml = ejs.render(content, {target_date: target_date, current_date: current_date});  //get redered HTML code
